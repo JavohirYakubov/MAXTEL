@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/actionProfile"
+        android:title="@string/your_data" />
+<!--    <item-->
+<!--        android:id="@+id/actionNotifications"-->
+<!--        android:title="@string/notifications" />-->
+    <item
+        android:id="@+id/actionLanguage"
+        android:title="@string/language" />
+
+    <item
+        android:id="@+id/actionNews"
+        android:title="@string/news" />
+
+    <item
+        android:id="@+id/actionShareApp"
+        android:title="@string/share" />
+
+    <item
+        android:id="@+id/actionAboutUs"
+        android:title="@string/about_app" />
+
+    <item android:id="@+id/actionLogout"
+        android:title="@string/logout"/>
+</menu>

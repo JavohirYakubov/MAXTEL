@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "922721579715",
+    "firebase_url": "https://maxtel-ea69d.firebaseio.com",
+    "project_id": "maxtel-ea69d",
+    "storage_bucket": "maxtel-ea69d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922721579715:android:1b782bb331ee3f615d2876",
+        "android_client_info": {
+          "package_name": "uz.isti.maxtel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922721579715-lldjh3qe9sh0e6vdq8k53ckniphssc2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uz.isti.maxtel",
+            "certificate_hash": "6ec709ee72d8b0c395e234a3ec6fee9294ff4bce"
+          }
+        },
+        {
+          "client_id": "922721579715-7eqjc6s7ln0t2pu9m6igbbuv82krs0ed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChB9Z5PEJ8tNtjCuRgg9MLfuZ-Noljid0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922721579715-7eqjc6s7ln0t2pu9m6igbbuv82krs0ed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

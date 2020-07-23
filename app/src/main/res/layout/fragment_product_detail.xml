@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:id="@+id/design_bottom_sheet"
+    tools:context=".screen.main.product.detail.ProductDetailFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/imgProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        tools:src="@drawable/gusht"/>
+
+                    <ImageView
+                        android:id="@+id/imgFavourite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_heart"
+                        android:tint="#FFCA64"
+                        android:layout_margin="16dp"
+                        android:layout_gravity="right"/>
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardViewSale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:visibility="gone"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="2dp"
+                        app:cardBackgroundColor="#D50000"
+                        app:contentPadding="4dp">
+                        <TextView
+                            android:id="@+id/tvSale"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            tools:text="Sale"/>
+                    </androidx.cardview.widget.CardView>
+                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="vertical">
+
+                    <!--            <com.hsalf.smileyrating.SmileyRating-->
+                    <!--                android:id="@+id/smileRating"-->
+                    <!--                android:layout_width="match_parent"-->
+                    <!--                android:layout_height="30dp" />-->
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        tools:text="ProductName"/>
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                        tools:text="ProductName"/>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="@color/gray_text"
+                            tools:text="1 000 000"/>
+                        <TextView
+                            android:id="@+id/tvBonus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="4dp"
+                            android:textColor="@color/colorAccent"
+                            tools:text="(10 + 1)"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/light_gray"/>
+        <LinearLayout
+            android:id="@+id/lyCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="invisible"
+            android:padding="16dp">
+            <ImageView
+                android:id="@+id/imgMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_minus_icon"/>
+            <EditText
+                android:id="@+id/tvProductCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginLeft="16dp"
+                android:inputType="number"
+                android:layout_gravity="center"
+                android:text="1"/>
+
+            <TextView
+                android:id="@+id/tvProductUnity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_marginRight="16dp"
+                android:layout_gravity="center"
+                android:text="1"/>
+
+            <ImageView
+                android:id="@+id/imgPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_plus_icon"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewAdd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/green"
+                app:cardElevation="1dp"
+                app:contentPadding="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:text="@string/add_button"/>
+
+                    <TextView
+                        android:id="@+id/tvTotalAmount"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        android:gravity="right"
+                        tools:text="100 000 сум"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/flProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4B000000"
+        android:visibility="gone"
+        android:clickable="true">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressAnimationView"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="loading.json"
+            app:lottie_loop="true" />
+
+    </FrameLayout>
+</FrameLayout>

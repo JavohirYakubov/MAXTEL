@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".screen.main.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+                    <ImageView
+                        android:id="@+id/imgMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_menu_black_24dp"
+                        android:tint="@color/colorAccent"/>
+                    <EditText
+                        android:id="@+id/edSearch"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:padding="4dp"
+                        android:hint="Search..."
+                        android:textColor="@color/colorAccent"
+                        android:visibility="gone"
+                        android:background="@drawable/edittext_background_shape"/>
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="@color/colorAccent"
+                        android:layout_marginLeft="8dp"
+                        android:padding="4dp"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+                    <ImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:visibility="gone"
+                        android:src="@drawable/ic_search_black_24dp"
+                        android:tint="@color/colorAccent"/>
+                </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/bottomnavigation_shape"
+            android:theme="@style/BottomNavigationView"
+            app:itemIconTint="@drawable/nav_selector"
+            app:itemTextColor="@drawable/nav_selector"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/nav_menu" />
+    </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/navigation_menu"
+        app:headerLayout="@layout/nav_layout"
+        android:layout_gravity="start">
+
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
