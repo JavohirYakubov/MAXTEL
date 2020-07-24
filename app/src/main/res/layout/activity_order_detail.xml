@@ -122,14 +122,7 @@
                                 android:textSize="12sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="#B0B0B0"
-                                android:text="@string/payment_type_"/>
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="#B0B0B0"
-                                android:text="@string/order_type_"/>
+                                android:text="@string/product_currency_"/>
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -150,23 +143,14 @@
                                 android:textSize="12sp"
                                 android:textColor="@color/black"
                                 android:text=""/>
-
                             <TextView
-                                android:id="@+id/tvPaymentType"
+                                android:id="@+id/tvCurrency"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="12sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="@color/black"
-                                android:text=""/>
-                            <TextView
-                                android:id="@+id/tvDeliveryType"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="12sp"
-                                android:layout_marginTop="8dp"
-                                android:textColor="@color/black"
-                                android:text=""/>
+                                android:text="UZS"/>
                             <TextView
                                 android:id="@+id/tvDate"
                                 android:layout_width="wrap_content"
@@ -275,56 +259,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold"
-                        android:text="@string/delivery_"/>
-                    <TextView
-                        android:id="@+id/tvDeliveryAmount"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="8dp"
-                        android:textColor="@color/colorAccent"
-                        tools:text="1000 000"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold"
-                        android:text="@string/sale_"/>
-                    <TextView
-                        android:id="@+id/tvSale"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="8dp"
-                        android:textColor="@color/colorAccent"
-                        tools:text="1000 000"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -380,6 +315,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+
                         android:visibility="gone"
                         android:orientation="horizontal">
                         <TextView
@@ -402,38 +338,6 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:layout_marginTop="8dp"
-                android:background="@color/light_gray"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardViewOk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardBackgroundColor="@color/green"
-                app:cardElevation="1dp"
-                app:contentPadding="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:textColor="@color/white"
-                        android:textAllCaps="true"
-                        android:textStyle="bold"
-                        android:text="@string/do_pay"/>
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
         </LinearLayout>
     </LinearLayout>
 

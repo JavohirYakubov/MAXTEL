@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     android:focusable="true"
     android:focusableInTouchMode="true"
     android:id="@+id/design_bottom_sheet"
@@ -18,6 +17,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@drawable/top_radius_shape"
             android:layout_weight="1">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -26,40 +26,28 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/imgProduct"
+                    <com.github.florent37.shapeofview.shapes.RoundRectView
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        tools:src="@drawable/gusht"/>
+                        app:shape_roundRect_topLeftRadius="16dp"
+                        app:shape_roundRect_topRightRadius="16dp">
+
+                        <ImageView
+                            android:id="@+id/imgProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            tools:src="@drawable/gusht"/>
+                    </com.github.florent37.shapeofview.shapes.RoundRectView>
+
 
                     <ImageView
                         android:id="@+id/imgFavourite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_heart"
-                        android:tint="#FFCA64"
+                        android:tint="@color/random2"
                         android:layout_margin="16dp"
                         android:layout_gravity="right"/>
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/cardViewSale"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="16dp"
-                        android:visibility="gone"
-                        app:cardCornerRadius="8dp"
-                        app:cardElevation="2dp"
-                        app:cardBackgroundColor="#D50000"
-                        app:contentPadding="4dp">
-                        <TextView
-                            android:id="@+id/tvSale"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:textColor="@color/white"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            tools:text="Sale"/>
-                    </androidx.cardview.widget.CardView>
                 </FrameLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -89,8 +77,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="18sp"
-                        tools:text="ProductName"/>
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        tools:text="Comment"/>
 
 
                     <LinearLayout
@@ -107,15 +97,6 @@
                             android:textSize="16sp"
                             android:textColor="@color/gray_text"
                             tools:text="1 000 000"/>
-                        <TextView
-                            android:id="@+id/tvBonus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="4dp"
-                            android:textColor="@color/colorAccent"
-                            tools:text="(10 + 1)"/>
                     </LinearLayout>
 
                 </LinearLayout>
@@ -131,6 +112,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
+            android:background="@color/white"
             android:visibility="invisible"
             android:padding="16dp">
             <ImageView
@@ -148,15 +130,6 @@
                 android:layout_gravity="center"
                 android:text="1"/>
 
-            <TextView
-                android:id="@+id/tvProductUnity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:layout_marginRight="16dp"
-                android:layout_gravity="center"
-                android:text="1"/>
-
             <ImageView
                 android:id="@+id/imgPlus"
                 android:layout_width="wrap_content"
@@ -170,7 +143,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="16dp"
                 app:cardCornerRadius="8dp"
-                app:cardBackgroundColor="@color/green"
+                app:cardBackgroundColor="@color/colorAccent"
                 app:cardElevation="1dp"
                 app:contentPadding="10dp">
                 <LinearLayout

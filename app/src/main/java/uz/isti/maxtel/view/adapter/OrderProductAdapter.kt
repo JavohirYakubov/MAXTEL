@@ -9,8 +9,8 @@ class OrderProductAdapter(val list: List<MakeOrderProductModel>): BaseAdapter(li
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         val item = list[position]
         holder.itemView.tvTitle.text = if(item.name.isNullOrEmpty()) item.pname else item.name
-        holder.itemView.tvCount.text = if (item.blok > 0) item.blok.toString() else item.dona.toString()
-        holder.itemView.tvAmount.text = item.price.toDouble().formattedAmount(false)
-        holder.itemView.tvTotalAmount.text = item.psumma.toDouble().formattedAmount(false)
+        holder.itemView.tvCount.text = item.dona.toString()
+        holder.itemView.tvAmount.text = item.price.toString()
+        holder.itemView.tvTotalAmount.text = item.psumma.toString()
     }
 }

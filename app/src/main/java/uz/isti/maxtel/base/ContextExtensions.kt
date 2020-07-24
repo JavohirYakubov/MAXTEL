@@ -324,6 +324,10 @@ fun Double?.formattedAmount(withCurrency: Boolean = true): String{
     return TextUtils.getFormattedAmount(this, withCurrency)
 }
 
+fun Double?.formattedAmountWithoutRate(withCurrency: Boolean = true, currency: String): String{
+    return TextUtils.getFormattedAmount(this, withCurrency, false, currency)
+}
+
 fun View.getColor(color: Int): Int{
     return ContextCompat.getColor(this.context, color)
 }

@@ -37,28 +37,10 @@ class SplashActivity : BaseActivity() {
     val api = ISTClient.retrofit.create(ISTIService::class.java)
 
     override fun initViews() {
-        NetworkUtils.registerNetworkStatusChangedListener(object: NetworkUtils.OnNetworkStatusChangedListener{
-            override fun onConnected(networkType: NetworkUtils.NetworkType?) {
-                showConnection(notConnection = false)
-                loadData()
-            }
-
-            override fun onDisconnected() {
-                showConnection(notConnection = true)
-            }
-        })
     }
 
     override fun loadData() {
-        NetworkUtils.isAvailableAsync {
-            runOnUiThread {
-                if (it){
-                    getData()
-                }else{
-                    showWarning("Tarmoq bilan ulanish yo'q.")
-                }
-            }
-        }
+        getData()
     }
 
     override fun initData() {

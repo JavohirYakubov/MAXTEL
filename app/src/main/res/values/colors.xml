@@ -15,7 +15,7 @@
     <color name="status_cancelled">#D81B60</color>
     <color name="background_color">#FBFBFB</color>
     <color name="green">#0DC646</color>
-    <color name="gray_text">#C7C7C7</color>
+    <color name="gray_text">#AEAEAE</color>
 
     <color name="random1">#7B1FA2</color>
     <color name="random2">#C51162</color>
@@ -23,4 +23,5 @@
     <color name="random4">#00C853</color>
     <color name="random5">#0091EA</color>
     <color name="random6">#AA00FF</color>
+    <color name="cart_color">#F50057</color>
 </resources>

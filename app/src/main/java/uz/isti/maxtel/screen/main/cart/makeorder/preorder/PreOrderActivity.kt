@@ -42,55 +42,23 @@ class PreOrderActivity : BaseActivity() {
         viewModel.createOrderData.observe(this, Observer {
             Prefs.clearCart()
             startActivity<SuccessOrderActivity>(Constants.EXTRA_DATA, it.PaymeURL ?: "", Constants.EXTRA_DATA_2,
-                if(order.Payme) order.summa else 0)
+                0)
         })
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = OrderProductAdapter(order.array)
 
-        tvAddress.text = order.address
-
-        when(order.cashbox){
-            0 ->{
-                tvPaymentType.text = getString(R.string.cashback)
-            }
-            1 ->{
-                tvPaymentType.text = getString(R.string.terminal)
-            }
-            2 ->{
-                tvPaymentType.text = getString(R.string.payme)
-            }
-            3 ->{
-                tvPaymentType.text = getString(R.string.transfer)
-            }
-        }
-
-        var user = Prefs.getClientInfo()
-        var totalAmount = order.deliverySumma.toDouble()
         var productAmount = 0.0
         order.array.forEach {
             productAmount += it.psumma
         }
 
-        var salePersent = user?.forRegDiscount ?: 0
-        if (user!!.usuallyDiscountMin1 >= productAmount && user.usuallyDiscountMin2 < productAmount){
-            salePersent += user.usuallyDiscount1
-        }else if (user!!.usuallyDiscountMin2 >= productAmount && user.usuallyDiscountMin3 < productAmount){
-            salePersent += user.usuallyDiscount2
-        }else if (user!!.usuallyDiscountMin3 >= productAmount){
-            salePersent += user.usuallyDiscount3
-        }
 
-        var saleAmount = 0.0
-        if (salePersent > 0){
-            saleAmount = productAmount * (salePersent / 100.0)
-        }
-        totalAmount += (productAmount - saleAmount)
+        tvProductAmount.text = productAmount.toString() + " " + Prefs.getCurrency().getName()
+        tvCurrency.text = Prefs.getCurrency().getName()
 
-        tvProductAmount.text = productAmount.formattedAmount()
-        tvDeliveryAmount.text = if(order.deliverySumma > 0) order.deliverySumma.toDouble().formattedAmount() else getString(R.string.free)
-        tvSale.text = (-saleAmount).formattedAmount()
-        tvTotalAmount.text = totalAmount.formattedAmount()
+        tvTotalAmount.text = order.summa.toString() + " " + Prefs.getCurrency().getName()
+
         cardViewOk.setOnClickListener {
             viewModel.createOrder(order)
         }

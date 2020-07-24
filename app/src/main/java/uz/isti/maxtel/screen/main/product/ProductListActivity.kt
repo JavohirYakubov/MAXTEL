@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.NetworkUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_product_list.*
+import kotlinx.android.synthetic.main.select_currency_dialog.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import uz.isti.maxtel.R
@@ -16,10 +18,8 @@ import uz.isti.maxtel.base.BaseActivity
 import uz.isti.maxtel.base.formattedAmount
 import uz.isti.maxtel.base.showError
 import uz.isti.maxtel.base.startClearActivity
-import uz.isti.maxtel.model.BrandModel
-import uz.isti.maxtel.model.CartEventModel
-import uz.isti.maxtel.model.EventModel
-import uz.isti.maxtel.model.ProductModel
+import uz.isti.maxtel.model.*
+import uz.isti.maxtel.model.enum.CurrencyEnum
 import uz.isti.maxtel.screen.main.MainActivity
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.product.detail.ProductDetailFragment
@@ -33,6 +33,7 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
     override fun getLayout(): Int = R.layout.activity_product_list
     lateinit var viewModel: MainViewModel
     lateinit var brand: BrandModel
+    lateinit var section: SectionModel
     var adapter: ProductsAdapter? = null
 
     override fun initViews() {
@@ -41,6 +42,7 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
         }
 
         brand = intent.getSerializableExtra(Constants.EXTRA_DATA) as BrandModel
+        section = intent.getSerializableExtra(Constants.EXTRA_DATA_2) as SectionModel
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         imgBack.setOnClickListener {
@@ -62,6 +64,36 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
         flCart.setOnClickListener {
             startClearActivity<MainActivity>(Constants.EXTRA_DATA_START_FRAGMENT, R.id.cartFragment)
         }
+
+        imgCurrency.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this, R.style.SheetDialog)
+            val view = layoutInflater.inflate(R.layout.select_currency_dialog, null)
+            bottomSheetDialog.setContentView(view)
+            if (Prefs.getCurrency() == CurrencyEnum.USD){
+                view.imgUSDChecked.visibility = View.VISIBLE
+                view.imgUZSChecked.visibility = View.GONE
+            }else{
+                view.imgUZSChecked.visibility = View.VISIBLE
+                view.imgUSDChecked.visibility = View.GONE
+            }
+
+            view.lyUSD.setOnClickListener {
+                Prefs.setCurrency(CurrencyEnum.USD)
+                loadData()
+                imgCurrency.setImageResource(Prefs.getCurrency().getImage())
+                bottomSheetDialog.dismiss()
+            }
+
+            view.lyUZS.setOnClickListener {
+                Prefs.setCurrency(CurrencyEnum.UZS)
+                loadData()
+                imgCurrency.setImageResource(Prefs.getCurrency().getImage())
+                bottomSheetDialog.dismiss()
+            }
+
+            bottomSheetDialog.show()
+        }
+
 
         imgSearch.setOnClickListener {
             if (edSearch.visibility == View.VISIBLE){
@@ -101,10 +133,12 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
     }
 
     override fun loadData() {
-        viewModel.getProductsByBrandId(brand.id)
+        viewModel.getProductsByBrandId(brand.id, section.id)
+        checkCart()
     }
 
     override fun initData() {
+        imgCurrency.setImageResource(Prefs.getCurrency().getImage())
         tvTitle.text = brand.name
         val cart = Prefs.getCartModel()
         if (cart?.count ?: 0 > 0){
@@ -150,7 +184,11 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
     }
 
     @Subscribe
-    fun onEvent(cartEventModel: CartEventModel){
+    fun onEvent(event: EventModel<Int>){
+
+    }
+
+    fun checkCart(){
         val cart = Prefs.getCartModel()
         if (cart?.count ?: 0 > 0){
             flCart.visibility = View.VISIBLE

@@ -41,6 +41,7 @@ class MainViewModel : ViewModel() {
     val newsData = MutableLiveData<List<NewsModel>>()
     val searchProductsData = MutableLiveData<List<ProductModel>>()
     val deliveryLocation = MutableLiveData<DeliveryLocation>()
+    val actReport = MutableLiveData<ActReportModel>()
 
     fun getStores(){
         userRepository.getStores(progressRegions, error, storesData)
@@ -50,12 +51,12 @@ class MainViewModel : ViewModel() {
         userRepository.getSections(progressSections, error, sectionsData)
     }
 
-    fun getBrandList(id: String, categoryId: String){
-        userRepository.getBrands(id, categoryId, progressManufacturers, error, brandData)
+    fun getBrandList(id: String){
+        userRepository.getBrands(id, progressManufacturers, error, brandData)
     }
 
-    fun getProductsByBrandId(id: String){
-        userRepository.getProducts(id, progressProducts, error, productsData)
+    fun getProductsByBrandId(id: String, categoryId: String){
+        userRepository.getProducts(id, categoryId, progressProducts, error, productsData)
     }
 
     fun getFavouriteProducts(){
@@ -104,6 +105,10 @@ class MainViewModel : ViewModel() {
 
     fun getDeliveryLocation(id: String){
         userRepository.getDeliveryLocation(id, progress, error, deliveryLocation)
+    }
+
+    fun getActReport(startDate: String, endDate: String, storeId: String, dollar: Int){
+        userRepository.getActReport(startDate, endDate, storeId, dollar, progress, error, actReport)
     }
 
 }

@@ -20,17 +20,7 @@ class CartProductsAdapter(val list: List<ProductModel>, val handler: CartProduct
         val item = getItem<ProductModel>(position)
         holder.itemView.tvTitle.text = item.name
         holder.itemView.imgProduct.loadImage(App.imageBaseUrl + item.image)
-        if (item?.unity == "Блок"){
-            holder.itemView.tvPrice.text =  ((item?.blokprice) * item.cartCount).formattedAmount()
-        }else{
-            holder.itemView.tvPrice.text =  ((item?.price) * item.cartCount).formattedAmount()
-        }
-
-        if (item.donalibonus == true){
-            holder.itemView.tvBonus.text = "(" + item.limitbonus + " + " + item.tovarbonus + ")"
-        }else{
-            holder.itemView.tvBonus.text = ""
-        }
+        holder.itemView.tvPrice.text =  ((item?.price) * item.cartCount).formattedAmount()
 
         holder.itemView.tvProductCount.text = item.cartCount.toString()
 
@@ -48,16 +38,9 @@ class CartProductsAdapter(val list: List<ProductModel>, val handler: CartProduct
         }
 
         holder.itemView.imgPlus.setOnClickListener {
-            if (item?.unity == "Блок"){
-                if (item.cartCount >= item.blokostatok){
-                    holder.itemView.context?.showWarning("Вы выбрали максимальное количество товара.")
-                    return@setOnClickListener
-                }
-            }else{
-                if (item.cartCount > item!!.productCount){
-                    holder.itemView.context?.showWarning("Вы выбрали максимальное количество товара.")
-                    return@setOnClickListener
-                }
+            if (item.cartCount > item!!.productCount){
+                holder.itemView.context?.showWarning("Вы выбрали максимальное количество товара.")
+                return@setOnClickListener
             }
 
             item.cartCount++

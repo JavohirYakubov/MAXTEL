@@ -3,6 +3,10 @@
     <item
         android:id="@+id/actionProfile"
         android:title="@string/your_data" />
+
+    <item
+        android:id="@+id/actionAct"
+        android:title="@string/act" />
 <!--    <item-->
 <!--        android:id="@+id/actionNotifications"-->
 <!--        android:title="@string/notifications" />-->

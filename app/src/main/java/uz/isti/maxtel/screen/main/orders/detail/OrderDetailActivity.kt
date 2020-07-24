@@ -17,10 +17,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_order_detail.*
 import rx.functions.Action1
 import uz.isti.maxtel.R
-import uz.isti.maxtel.base.BaseActivity
-import uz.isti.maxtel.base.formattedAmount
-import uz.isti.maxtel.base.startActivity
-import uz.isti.maxtel.base.startActivityToOpenUrlInBrowser
+import uz.isti.maxtel.base.*
 import uz.isti.maxtel.model.OrderModel
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.webview.AppWebViewActivity
@@ -33,7 +30,6 @@ import java.util.concurrent.TimeUnit
 
 class OrderDetailActivity : BaseActivity(), OnMapReadyCallback {
     override fun getLayout(): Int = R.layout.activity_order_detail
-    private var interval: Disposable? = null
     lateinit var viewModel: MainViewModel
     lateinit var order: OrderModel
     private var googleMap: GoogleMap? = null
@@ -47,107 +43,30 @@ class OrderDetailActivity : BaseActivity(), OnMapReadyCallback {
         imgBack.setOnClickListener {
             finish()
         }
-
-        viewModel.deliveryLocation.observe(this, Observer {
-            if (storeMarker != null){
-                storeMarker!!.position = LatLng(it.lat.toDoubleOrNull() ?: 0.0, it.long.toDoubleOrNull() ?: 0.0)
-                if (order.delivery == 0){
-                    val cameraPosition = CameraPosition.Builder()
-                        .target(storeMarker!!.position)
-                        .zoom(googleMap?.cameraPosition?.zoom ?: 11f)
-                        .build()
-
-                    googleMap?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                }
-            }else{
-                if (order.status < 2 || order.delivery == 1){
-                    val storeIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(this.resources, R.drawable.store_center))
-                    storeMarker = googleMap?.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(it.lat.toDoubleOrNull() ?: 0.0, it.long.toDoubleOrNull() ?: 0.0))
-                            .title(it.title)
-                            .icon(storeIcon)
-                    )
-                }else{
-                    val storeIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(this.resources, R.drawable.transports))
-                    storeMarker = googleMap?.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(it.lat.toDoubleOrNull() ?: 0.0, it.long.toDoubleOrNull() ?: 0.0))
-                            .title(it.title)
-                            .icon(storeIcon)
-                    )
-                }
-            }
-        })
-
-        cardViewOk.setOnClickListener {
-            startActivityToOpenUrlInBrowser(
-                order.PaymeURL ?: ""
-            )
-        }
-        if (order.status >= 2){
-            startTimer()
-        }
-    }
-
-    fun startTimer(){
-        interval = Observable.interval(15, TimeUnit.SECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                runOnUiThread {
-                    loadData()
-                }
-            }
     }
 
     override fun loadData() {
         viewModel.getDeliveryLocation(order.refKey)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        interval?.dispose()
-    }
 
     override fun initData() {
         step_view.setSteps(
             listOf(
                 getString(R.string.accepted),
                 getString(R.string.making_status),
-                getString(R.string.order_maked),
-                getString(R.string.on_way),
-                getString(R.string.completed)
+                getString(R.string.order_maked)
             )
         )
-        step_view.go(order.status, true)
+        step_view.go(order.status - 1, true)
 
         tvStore.text = order.skladname
 
         tvTitle.text =  getString(R.string.order_number_) + "${order.number}"
-        when(order.cashbox){
-            0 ->{
-                tvPaymentType.text = getString(R.string.cashback)
-            }
-            1 ->{
-                tvPaymentType.text = getString(R.string.terminal)
-            }
-            2 ->{
-                tvPaymentType.text = getString(R.string.payme)
-            }
-            3 ->{
-                tvPaymentType.text = getString(R.string.transfer)
-            }
-        }
-
-        if (order.Payme){
-            tvPaymentType.text = getString(R.string.payme)
-        }
-
-        if (order.delivery == 1){
-            tvDeliveryType.text = getString(R.string.pickup)
+        if (order.dollar){
+            tvCurrency.text = "$"
         }else{
-            tvDeliveryType.text = getString(R.string.delivery)
+            tvCurrency.text = "сум"
         }
         var totalAmount = order.deliverySumma.toDouble()
         var productAmount = 0.0
@@ -155,33 +74,34 @@ class OrderDetailActivity : BaseActivity(), OnMapReadyCallback {
             productAmount += it.psumma
         }
 
-        totalAmount += (productAmount - order.discount)
+        totalAmount += productAmount
 
-        tvProductAmount.text = productAmount.formattedAmount()
-        tvDeliveryAmount.text = if(order.deliverySumma > 0) order.deliverySumma.toDouble().formattedAmount() else getString(R.string.free)
-        tvSale.text = (-order.discount.toDouble()).formattedAmount()
-        tvTotalAmount.text = totalAmount.formattedAmount()
+        tvProductAmount.text = productAmount.formattedAmountWithoutRate(true, if (order.dollar){
+            "$"
+        }else{
+           "сум"
+        })
+
+        tvTotalAmount.text = totalAmount.formattedAmountWithoutRate(true, if (order.dollar){
+            "$"
+        }else{
+            "сум"
+        })
 
         tvDate.text = DateUtils.getTimeFromServerTime(order.date)
 
         recycler.layoutManager = LinearLayoutManager(this)
         recycler.adapter = OrderProductAdapter(order.array)
 
-        if (order.Payme && (order.paidSumma < order.summa)){
-            cardViewOk.visibility = View.VISIBLE
-        }else{
-            cardViewOk.visibility = View.GONE
-        }
+        if (googleMap != null && order.store_lat.isNotEmpty() && order.store_long.isNotEmpty()){
 
-        if (googleMap != null && order.lat.isNotEmpty() && order.long.isNotEmpty()){
+            var clientLatLng = LatLng(order.store_lat.toDoubleOrNull() ?: 0.0, order.store_long.toDoubleOrNull() ?: 0.0)
 
-            var clientLatLng = LatLng(order.lat.toDoubleOrNull() ?: 0.0, order.long.toDoubleOrNull() ?: 0.0)
-
-            val clientIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(this.resources, R.drawable.client_center))
-            val clientMarker = googleMap?.addMarker(
+            val clientIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(this.resources, R.drawable.store_center))
+            googleMap?.addMarker(
                 MarkerOptions()
                     .position(clientLatLng)
-                    .title(getString(R.string.order_number_) + "${order.number}")
+                    .title(order.skladname)
                     .icon(clientIcon)
             )
 

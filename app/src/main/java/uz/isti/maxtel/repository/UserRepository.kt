@@ -35,8 +35,8 @@ class UserRepository: BaseRepository() {
         )
     }
 
-    fun getProducts(id: String, progress: MutableLiveData<Boolean>, error: MutableLiveData<String>, data: MutableLiveData<List<ProductModel>>){
-        compositeDisposable.add(api.getProducts(id)
+    fun getProducts(id: String, categoryId: String, progress: MutableLiveData<Boolean>, error: MutableLiveData<String>, data: MutableLiveData<List<ProductModel>>){
+        compositeDisposable.add(api.getProducts(id, categoryId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { progress.value = false }
@@ -65,8 +65,8 @@ class UserRepository: BaseRepository() {
         )
     }
 
-    fun getBrands(sectionId: String, categoryId: String, progress: MutableLiveData<Boolean>, error: MutableLiveData<String>, data: MutableLiveData<List<BrandModel>>){
-        compositeDisposable.add(api.getBrand(sectionId, categoryId)
+    fun getBrands(sectionId: String, progress: MutableLiveData<Boolean>, error: MutableLiveData<String>, data: MutableLiveData<List<BrandModel>>){
+        compositeDisposable.add(api.getBrand(sectionId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally { progress.value = false }
@@ -99,6 +99,14 @@ class UserRepository: BaseRepository() {
             .subscribeWith(object: CallbackWrapper<BaseResponse<List<ProductModel>?>>(error){
                 override fun onSuccess(t: BaseResponse<List<ProductModel>?>) {
                     if (!t.error && t.data != null){
+                        val cartProducts = Prefs.getCartList()
+                        t.data.forEach {
+                            cartProducts.forEach { cart ->
+                                if (it.id == cart.id){
+                                    it.cartCount = cart.count
+                                }
+                            }
+                        }
                         data.value = t.data
                     }else{
                         error.value = t.message
@@ -139,13 +147,7 @@ class UserRepository: BaseRepository() {
 
                         var totalAmount = 0.0
                         items?.forEach {
-                            val item = it as ProductModel
-                            if (item?.unity == "Блок"){
-                                totalAmount += item.cartCount * item.blokprice!!
-                            }else{
-                                totalAmount += item.cartCount * item.price!!
-                            }
-
+                            totalAmount += it.cartCount * it.price!!
                         }
 
                         Prefs.setCartModel(CartEventModel(Constants.EVENT_UPDATE_CART, items.count(), totalAmount))
@@ -380,6 +382,24 @@ class UserRepository: BaseRepository() {
             .doOnSubscribe {  }
             .subscribeWith(object: CallbackWrapper<BaseResponse<DeliveryLocation?>>(error){
                 override fun onSuccess(t: BaseResponse<DeliveryLocation?>) {
+                    if (!t.error && t.data != null){
+                        data.value = t.data
+                    }else{
+                        error.value = t.message
+                    }
+                }
+            })
+        )
+    }
+
+    fun getActReport(startDate: String, endDate: String, storeId: String, dollar: Int, progress: MutableLiveData<Boolean>, error: MutableLiveData<String>, data: MutableLiveData<ActReportModel>){
+        compositeDisposable.add(api.getActReport(startDate, endDate, storeId, dollar)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally { progress.value = false}
+            .doOnSubscribe { progress.value = true }
+            .subscribeWith(object: CallbackWrapper<BaseResponse<ActReportModel?>>(error){
+                override fun onSuccess(t: BaseResponse<ActReportModel?>) {
                     if (!t.error && t.data != null){
                         data.value = t.data
                     }else{

@@ -13,7 +13,7 @@ class SectionsAdapter(val list: List<SectionModel>, listener: BaseAdapterListene
         super.onBindViewHolder(holder, position)
         val item = list[position]
         holder.itemView.tvTitle.text = item.name
-        holder.itemView.tvSubTitle.text = "${item.items} ta mahsulot"
+        holder.itemView.tvSubTitle.text = "${item.items} hil brend"
         holder.itemView.imgSection.loadImage(App.imageBaseUrl + item.image)
     }
 }

@@ -27,7 +27,6 @@ import java.io.Serializable
 class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun getLayout(): Int = R.layout.fragment_home
     lateinit var viewModel: MainViewModel
-    var selectedCategory: CategoryModel? = null
     var isSetup = false
 
     override fun setupViews() {
@@ -60,7 +59,7 @@ class HomeFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             recyclerSubCategory.layoutManager = GridLayoutManager(activity, 1)
             recyclerSubCategory.adapter = SectionsAdapter(viewModel.sectionsData.value!!, object : BaseAdapterListener{
                 override fun onClickItem(item: Any?) {
-                    activity?.startActivity<ManufacturerListActivity>(Constants.EXTRA_DATA, (item as SectionModel) as Serializable, Constants.EXTRA_DATA_2, selectedCategory as Serializable)
+                    activity?.startActivity<ManufacturerListActivity>(Constants.EXTRA_DATA, (item as SectionModel) as Serializable)
                 }
             })
         }

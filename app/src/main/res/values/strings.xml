@@ -129,4 +129,14 @@
     <string name="region">Область</string>
     <string name="please_help_me">Пожалуйста, заполните все поля, чтобы улучшить качество обслуживания!</string>
     <string name="delivery_type">Доставка</string>
+    <string name="product_currency">Валюта</string>
+    <string name="product_currency_">Валюта:</string>
+    <string name="c_uzs">сум</string>
+    <string name="act_report">Акт сверки</string>
+    <string name="start_date">Начальное время</string>
+    <string name="no_selected">Не выбран</string>
+    <string name="please_select_two_interval">Пожалуйста, выберите два интервала.</string>
+    <string name="act">Отчеты</string>
+    <string name="order_number">Номер заказа</string>
+    <string name="end_date_">Время окончания</string>
 </resources>

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -58,6 +60,7 @@
         <activity android:name=".screen.main.manufacturer.ManufacturerListActivity" />
         <activity android:name=".screen.auth.SignActivity" />
         <activity android:name=".screen.main.map.MapActivity" />
+        <activity android:name=".screen.main.actreport.ActReportActivity" />
         <activity
             android:name=".screen.main.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />

@@ -6,12 +6,15 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.blankj.utilcode.util.NetworkUtils
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_manufacturer_list.*
+import kotlinx.android.synthetic.main.select_currency_dialog.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import uz.isti.maxtel.R
 import uz.isti.maxtel.base.*
 import uz.isti.maxtel.model.*
+import uz.isti.maxtel.model.enum.CurrencyEnum
 import uz.isti.maxtel.screen.main.MainActivity
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.product.ProductListActivity
@@ -25,11 +28,10 @@ class ManufacturerListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLis
     override fun getLayout(): Int = R.layout.activity_manufacturer_list
     lateinit var viewModel: MainViewModel
     lateinit var section: SectionModel
-    lateinit var category: CategoryModel
 
     override fun initViews() {
         section = intent.getSerializableExtra(Constants.EXTRA_DATA) as SectionModel
-        category = intent.getSerializableExtra(Constants.EXTRA_DATA_2) as CategoryModel
+
         if (!EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().register(this)
         }
@@ -56,7 +58,6 @@ class ManufacturerListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLis
             startClearActivity<MainActivity>(Constants.EXTRA_DATA_START_FRAGMENT, R.id.cartFragment)
         }
 
-
         NetworkUtils.registerNetworkStatusChangedListener(object: NetworkUtils.OnNetworkStatusChangedListener{
             override fun onConnected(networkType: NetworkUtils.NetworkType?) {
                 showConnection(notConnection = false)
@@ -70,7 +71,8 @@ class ManufacturerListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLis
     }
 
     override fun loadData() {
-        viewModel.getBrandList(section.id, category.id)
+        viewModel.getBrandList(section.id)
+        checkCart()
     }
 
     override fun initData() {
@@ -91,7 +93,7 @@ class ManufacturerListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLis
             recycler.layoutManager = GridLayoutManager(this, 1)
             recycler.adapter = BrandAdapter(viewModel.brandData.value!!, object: BaseAdapterListener{
                 override fun onClickItem(item: Any?) {
-                    startActivity<ProductListActivity>(Constants.EXTRA_DATA, (item as BrandModel) as Serializable)
+                    startActivity<ProductListActivity>(Constants.EXTRA_DATA, (item as BrandModel) as Serializable, Constants.EXTRA_DATA_2, (section) as Serializable)
                 }
             })
         }
@@ -103,16 +105,24 @@ class ManufacturerListActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshLis
     }
 
     @Subscribe
-    fun onEvent(cartEventModel: CartEventModel){
+    fun onEvent(event: EventModel<Int>){
+        if (event.event == Constants.EVENT_UPDATE_BASKET){
+            checkCart()
+        }
+    }
+
+
+    fun checkCart(){
         val cart = Prefs.getCartModel()
         if (cart?.count ?: 0 > 0){
             flCart.visibility = View.VISIBLE
-            tvCartCount.text = getString(R.string.cart_).toUpperCase() + " (${cart?.count.toString()})"
+            tvCartCount.text = getString(R.string.cart_).toUpperCase() + " (${cart?.count})"
             tvCartAmount.text = cart?.totalAmount.formattedAmount()
         }else{
             flCart.visibility = View.GONE
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (!EventBus.getDefault().isRegistered(this)){

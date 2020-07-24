@@ -117,11 +117,7 @@ class CartFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         totalAmount = 0.0
         adapter?.items?.forEach {
             val item = it as ProductModel
-            if (item?.unity == "Блок"){
-                totalAmount += item.cartCount * item.blokprice!!
-            }else{
-                totalAmount += item.cartCount * item.price!!
-            }
+            totalAmount += item.cartCount * item.price!!
 
         }
 

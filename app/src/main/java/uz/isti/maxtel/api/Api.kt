@@ -25,10 +25,10 @@ interface Api {
     fun getSections(@Query("skladid") storeId: String = Prefs.getStore()?.id ?: ""): Observable<BaseResponse<List<SectionModel>?>>
 
     @GET("GetBrend")
-    fun getBrand(@Query("bolimid") bolimid: String,@Query("catid") catId: String, @Query("skladid") storeId: String = Prefs.getStore()?.id ?: ""): Observable<BaseResponse<List<BrandModel>?>>
+    fun getBrand(@Query("bolimid") bolimid: String, @Query("skladid") storeId: String = Prefs.getStore()?.id ?: ""): Observable<BaseResponse<List<BrandModel>?>>
 
     @GET("GetTovarByBrend")
-    fun getProducts(@Query("brendid") brendId: String, @Query("skladid") storeId: String = Prefs.getStore()?.id ?: ""): Observable<BaseResponse<List<ProductModel>?>>
+    fun getProducts(@Query("brendid") brendId: String, @Query("categoryId") categoryId: String, @Query("skladid") storeId: String = Prefs.getStore()?.id ?: ""): Observable<BaseResponse<List<ProductModel>?>>
 
     @GET("GetTovarInfo")
     fun getProductById(@Query("id") id: String, @Query("skladid") storeId: String = Prefs.getStore()?.id ?: ""): Observable<BaseResponse<List<ProductModel>?>>
@@ -62,5 +62,8 @@ interface Api {
 
     @GET("GetLocationByBron")
     fun getDeliveryLocation(@Query("refKey") id: String): Observable<BaseResponse<DeliveryLocation?>>
+
+    @GET("ClientSverkaList")
+    fun getActReport(@Query("bsana")startDate: String, @Query("osana")endDate: String, @Query("skladid") storeId: String, @Query("dollar") dollar: Int, @Query("token") token: String = Prefs.getToken()): Observable<BaseResponse<ActReportModel?>>
 }
 

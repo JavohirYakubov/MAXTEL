@@ -16,5 +16,6 @@ data class ClientInfoModel(
     val usuallyDiscount1: Int,
     val usuallyDiscount2: Int,
     val usuallyDiscount3: Int,
-    val marketName: String?
+    val marketName: String?,
+    val currency: Double
 ): Serializable

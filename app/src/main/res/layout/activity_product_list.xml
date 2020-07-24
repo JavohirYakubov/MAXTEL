@@ -56,6 +56,13 @@
                 android:src="@drawable/ic_search_black_24dp"
                 android:tint="@color/colorAccent"/>
 
+            <ImageView
+                android:id="@+id/imgCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/ic_uzbekistan"/>
+
         </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

@@ -130,4 +130,14 @@
     <string name="region">Вилоят</string>
     <string name="please_help_me">Илтимос ҳизмат сифатини яхшилаш учун ҳамма майдонларни тўлдиринг!</string>
     <string name="delivery_type">Етказиб бериш</string>
+    <string name="product_currency">Савдо валютаси</string>
+    <string name="product_currency_">Савдо валютаси:</string>
+    <string name="c_uzs">сум</string>
+    <string name="act_report">Акт сверки</string>
+    <string name="start_date">Бошланиш вақти</string>
+    <string name="no_selected">Танланмаган</string>
+    <string name="please_select_two_interval">Пожалуйста, выберите два интервала.</string>
+    <string name="act">Ҳисоботлар</string>
+    <string name="order_number">Буюртма рақами</string>
+    <string name="end_date_">Тугаш вақти</string>
 </resources>

@@ -66,7 +66,7 @@ class SearchProductActivity : BaseActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (edSearch.text.length >= 3){
+                if (edSearch.text.length >= 2){
                     viewModel.getProductsByName(edSearch.text.toString())
                 }else{
                     recycler.adapter = null

@@ -20,20 +20,6 @@ class ProductsAdapter(var list: List<ProductModel>, val handler: ProductsAdapter
         holder.itemView.imgProduct.loadImage(App.imageBaseUrl + item.image)
         holder.itemView.tvPrice.text = item?.price?.formattedAmount()
 
-        if (item.foizlibonus == true){
-            holder.itemView.cardViewSale.visibility = View.VISIBLE
-            holder.itemView.tvSale.text = item.foiz.toString() + "%"
-        }else{
-            holder.itemView.cardViewSale.visibility = View.GONE
-        }
-
-        if (item.donalibonus == true){
-            holder.itemView.tvBonus.visibility = View.VISIBLE
-            holder.itemView.tvBonus.text = "(" + item.limitbonus + " + " + item.tovarbonus + ")"
-        }else{
-            holder.itemView.tvBonus.visibility = View.GONE
-        }
-
         if (item.cartCount > 0){
             holder.itemView.imgPlus.visibility = View.GONE
             holder.itemView.textViewCartCount.visibility = View.VISIBLE

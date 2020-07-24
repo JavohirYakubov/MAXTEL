@@ -3,6 +3,7 @@ package uz.isti.maxtel.utils
 import com.orhanobut.hawk.Hawk
 import uz.isti.maxtel.App
 import uz.isti.maxtel.model.*
+import uz.isti.maxtel.model.enum.CurrencyEnum
 
 const val PREF_TOKEN = "pref_token"
 const val PREF_USER_SETTINGS = "pref_user_settings"
@@ -41,11 +42,11 @@ class Prefs {
             Hawk.put(PREF_LANG, lang)
         }
 
-        fun getDistrictId(): String{
-            return Hawk.get(PREF_DISTRICT, "")
+        fun getCurrency(): CurrencyEnum{
+            return Hawk.get(PREF_DISTRICT, CurrencyEnum.UZS)
         }
 
-        fun setDistrictId(value: String){
+        fun setCurrency(value: CurrencyEnum){
             Hawk.put(PREF_DISTRICT, value)
         }
 

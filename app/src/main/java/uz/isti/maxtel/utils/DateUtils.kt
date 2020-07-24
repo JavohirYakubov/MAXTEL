@@ -49,5 +49,12 @@ class DateUtils {
                 return ""
             }
         }
+
+        fun getDateFromCalender(calendar: Calendar): String{
+            val myDateFormat =
+                SimpleDateFormat("dd.MM.yyyy")
+
+            return myDateFormat.format(calendar.getTime())
+        }
     }
 }

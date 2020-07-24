@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottomsheet_language.view.*
 import kotlinx.android.synthetic.main.nav_layout.view.*
+import kotlinx.android.synthetic.main.select_currency_dialog.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import q.rorbin.badgeview.Badge
@@ -31,8 +32,10 @@ import uz.isti.maxtel.BuildConfig
 import uz.isti.maxtel.R
 import uz.isti.maxtel.base.*
 import uz.isti.maxtel.model.*
+import uz.isti.maxtel.model.enum.CurrencyEnum
 import uz.isti.maxtel.screen.auth.SignActivity
 import uz.isti.maxtel.screen.main.aboutapp.AboutAppActivity
+import uz.isti.maxtel.screen.main.actreport.ActReportActivity
 import uz.isti.maxtel.screen.main.cart.CartFragment
 import uz.isti.maxtel.screen.main.favourite.FavouriteFragment
 import uz.isti.maxtel.screen.main.home.HomeFragment
@@ -47,6 +50,7 @@ import uz.isti.maxtel.screen.main.stores.StoresFragment
 import uz.isti.maxtel.screen.main.webview.AppWebViewActivity
 import uz.isti.maxtel.screen.splash.SplashActivity
 import uz.isti.maxtel.utils.Constants
+import uz.isti.maxtel.utils.Constants.Companion.EVENT_UPDATE_BASKET
 import uz.isti.maxtel.utils.LocaleManager.setNewLocale
 import uz.isti.maxtel.utils.Prefs
 import uz.isti.maxtel.view.adapter.BaseAdapterListener
@@ -86,21 +90,13 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
 
             var totalAmount = 0.0
             it?.forEach {
-                val item = it as ProductModel
-                if (item?.unity == "Блок"){
-                    totalAmount += item.cartCount * item.blokprice!!
-                }else{
-                    totalAmount += item.cartCount * item.price!!
-                }
-
+                totalAmount += it.cartCount * it.price!!
             }
         })
 
         viewModel.storeInfoData.observe(this, Observer {
             Prefs.setStoreInfo(it)
         })
-
-        pushFragment(R.id.container, storesFragment, storesFragment.tag ?: "")
 
         nav_bottom.setOnNavigationItemSelectedListener { item: MenuItem ->
             if (Prefs.getStore() == null){
@@ -246,8 +242,12 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
         imgSearch.setOnClickListener {
             startActivity<SearchProductActivity>()
         }
+
         if (intent.hasExtra(Constants.EXTRA_DATA_START_FRAGMENT)){
-            nav_bottom.selectedItemId = intent.getIntExtra(Constants.EXTRA_DATA_START_FRAGMENT, R.id.homeFragment)
+            nav_bottom.selectedItemId = intent.getIntExtra(Constants.EXTRA_DATA_START_FRAGMENT, R.id.homeStores)
+        }
+        if (nav_bottom.selectedItemId == R.id.homeStores){
+            pushFragment(R.id.container, storesFragment, storesFragment.tag ?: "")
         }
 
         setClientDataNav()
@@ -266,9 +266,38 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
 
     fun setClientDataNav(){
         val user = Prefs.getClientInfo()
-        val view = navigation.getHeaderView(0)
-        view.tvPersonName.text = user?.name
-        view.tvPhone.text = user?.phone
+        val headerView = navigation.getHeaderView(0)
+        headerView.tvPersonName.text = user?.name
+        headerView.tvPhone.text = user?.phone
+        headerView.imgCurrency.setImageResource(Prefs.getCurrency().getImage())
+        headerView.imgCurrency.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this, R.style.SheetDialog)
+            val view = layoutInflater.inflate(R.layout.select_currency_dialog, null)
+            bottomSheetDialog.setContentView(view)
+            if (Prefs.getCurrency() == CurrencyEnum.USD){
+                view.imgUSDChecked.visibility = View.VISIBLE
+                view.imgUZSChecked.visibility = View.GONE
+            }else{
+                view.imgUZSChecked.visibility = View.VISIBLE
+                view.imgUSDChecked.visibility = View.GONE
+            }
+
+            view.lyUSD.setOnClickListener {
+                Prefs.setCurrency(CurrencyEnum.USD)
+                headerView.imgCurrency.setImageResource(Prefs.getCurrency().getImage())
+                bottomSheetDialog.dismiss()
+                EventBus.getDefault().post(EventModel(EVENT_UPDATE_BASKET, 0))
+            }
+
+            view.lyUZS.setOnClickListener {
+                Prefs.setCurrency(CurrencyEnum.UZS)
+                headerView.imgCurrency.setImageResource(Prefs.getCurrency().getImage())
+                bottomSheetDialog.dismiss()
+                EventBus.getDefault().post(EventModel(EVENT_UPDATE_BASKET, 0))
+            }
+
+            bottomSheetDialog.show()
+        }
     }
 
     override fun updateStore() {
@@ -342,6 +371,8 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         if (p0.itemId == R.id.actionNews){
             startActivity<NewsActivity>()
+        }else if (p0.itemId == R.id.actionAct){
+            startActivity<ActReportActivity>()
         }else if (p0.itemId == R.id.actionShareApp){
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND

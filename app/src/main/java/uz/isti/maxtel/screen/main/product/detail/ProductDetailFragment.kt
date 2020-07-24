@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -52,6 +53,8 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.SheetDialog)
+
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         viewModel.progressProductDetail.observe(this, Observer {
@@ -98,16 +101,9 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
 
         imgPlus.setOnClickListener {
             val product = viewModel.productDetailData.value
-            if (product?.unity == "Блок"){
-                if (cartCount > product.blokostatok){
-                    activity?.showWarning("Вы выбрали максимальное количество товара.")
-                    return@setOnClickListener
-                }
-            }else{
-                if (cartCount > product!!.productCount){
-                    activity?.showWarning("Вы выбрали максимальное количество товара.")
-                    return@setOnClickListener
-                }
+            if (cartCount > product!!.productCount){
+                activity?.showWarning("Вы выбрали максимальное количество товара.")
+                return@setOnClickListener
             }
 
             cartCount++
@@ -144,24 +140,13 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
                     val productCount = tvProductCount.text.toString().toIntOrNull() ?: 0
 
                     val product = viewModel.productDetailData.value
-                    if (product?.unity == "Блок"){
-                        if (productCount > product.blokostatok){
-                            activity?.showWarning("Вы выбрали максимальное количество товара.")
-                            tvProductCount.setText("${product.blokostatok.toInt()}")
-                            cartCount = product.blokostatok.toInt()
-                        }else{
-                            cartCount = productCount
-                            updateCartAmounts()
-                        }
+                    if (productCount > product!!.productCount){
+                        activity?.showWarning("Вы выбрали максимальное количество товара.")
+                        tvProductCount.setText("${product.productCount}")
+                        cartCount = product.productCount
                     }else{
-                        if (productCount > product!!.productCount){
-                            activity?.showWarning("Вы выбрали максимальное количество товара.")
-                            tvProductCount.setText("${product.productCount}")
-                            cartCount = product.productCount
-                        }else{
-                            cartCount = productCount
-                            updateCartAmounts()
-                        }
+                        cartCount = productCount
+                        updateCartAmounts()
                     }
                 }
             }
@@ -182,27 +167,10 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
         imgProduct.loadImage(App.imageBaseUrl + product?.image)
         tvTitle.text = product?.name
         tvDescription.text = product?.information
-
-        if (product?.unity == "Блок"){
-            tvPrice.text = product?.price?.formattedAmount() + " | Блок " + product?.blokprice?.formattedAmount() + " (1 ${getString(R.string.unity_blok)} = ${product?.blok} ${getString(R.string.unity_sht)})"
-        }else{
-            tvPrice.text = product?.price?.formattedAmount() + " (1 ${getString(R.string.unity_blok)} = ${product?.blok} ${getString(R.string.unity_sht)})"
+        if (product?.information.isNullOrEmpty()){
+            tvDescription.visibility = View.VISIBLE
         }
-
-        if (product?.foizlibonus == true){
-            cardViewSale.visibility = View.VISIBLE
-            tvSale.text = product?.foiz.toString() + "%"
-        }else{
-            cardViewSale.visibility = View.GONE
-        }
-
-        if (product?.donalibonus == true){
-            tvBonus.visibility = View.VISIBLE
-            tvBonus.text = "(" + product?.limitbonus + " + " + product?.tovarbonus + ")"
-        }else{
-            tvBonus.visibility = View.GONE
-        }
-
+        tvPrice.text = product?.price?.formattedAmount()
         product?.favourite = Prefs.isFavourite(product?.id!!)
 
         if (product?.favourite == true){
@@ -215,17 +183,7 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
 
     fun updateCartAmounts(){
         val product = viewModel.productDetailData.value
-        if (product?.unity == "Блок"){
-            tvProductUnity.text = getString(R.string.unity_blok)
-        }else{
-            tvProductUnity.text = getString(R.string.unity_sht)
-        }
-        if (product?.unity == "Блок"){
-            tvTotalAmount.text = ((product?.blokprice) * cartCount).formattedAmount()
-        }else{
-            tvTotalAmount.text = ((product?.price ?: 0.0) * cartCount).formattedAmount()
-        }
-
+        tvTotalAmount.text = ((product?.price ?: 0.0) * cartCount).formattedAmount()
     }
 
 

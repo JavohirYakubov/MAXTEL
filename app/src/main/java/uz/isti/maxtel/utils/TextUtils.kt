@@ -1,5 +1,7 @@
 package uz.isti.maxtel.utils
 
+import uz.isti.maxtel.R
+import uz.isti.maxtel.model.enum.CurrencyEnum
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.util.*
@@ -29,20 +31,25 @@ class TextUtils {
                 else if (amountInSums == 0L && amountInTiyins < 0) result = "-$result.$tiyinString"
                 else result = "$result.$tiyinString"
             }
-            return result + " сум"
+            return result
         }
 
-        fun getFormattedAmount(amount: Double?, withCurrency: Boolean = true): String{
+        fun getFormattedAmount(amount: Double?, withCurrency: Boolean = true, withRate: Boolean = true, currency: String = Prefs.getCurrency().getName()): String{
             if (amount == null){
                 return ""
             }
+            var totalAmount = amount
+            if (!withRate){
 
+            }else if (Prefs.getCurrency() == CurrencyEnum.UZS){
+                totalAmount *= Prefs.getClientInfo()!!.currency
+            }
             val formatSymbols = DecimalFormatSymbols(Locale.ENGLISH)
             formatSymbols.decimalSeparator = '.'
             formatSymbols.groupingSeparator = ' '
             val formatter = DecimalFormat("###,###.##", formatSymbols)
-            var result = formatter.format(amount)
-            return result + (if (withCurrency) " сум" else "")
+            var result = formatter.format(totalAmount)
+            return result + (if (withCurrency) " ${currency}" else "")
         }
     }
 }
