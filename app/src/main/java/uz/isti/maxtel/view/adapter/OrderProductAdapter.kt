@@ -10,7 +10,7 @@ class OrderProductAdapter(val list: List<MakeOrderProductModel>): BaseAdapter(li
         val item = list[position]
         holder.itemView.tvTitle.text = if(item.name.isNullOrEmpty()) item.pname else item.name
         holder.itemView.tvCount.text = item.dona.toString()
-        holder.itemView.tvAmount.text = item.price.toString()
-        holder.itemView.tvTotalAmount.text = item.psumma.toString()
+        holder.itemView.tvAmount.text = String.format("%.2f", item.price).replace(",", ".")
+        holder.itemView.tvTotalAmount.text = String.format("%.2f", item.psumma).replace(",", ".")
     }
 }

@@ -74,11 +74,6 @@ class MakeOrderActivity : BaseActivity() {
 
         cardViewOk.setOnClickListener {
 
-            if (address == null){
-                showWarning("Пожалуйста, выберите адрес доставки.")
-                return@setOnClickListener
-            }
-
             var items = products.map {
                 MakeOrderProductModel(
                     it.name,

@@ -54,10 +54,10 @@ class PreOrderActivity : BaseActivity() {
         }
 
 
-        tvProductAmount.text = productAmount.toString() + " " + Prefs.getCurrency().getName()
+        tvProductAmount.text = String.format("%.2f", productAmount).replace(",", ".") + " " + Prefs.getCurrency().getName()
         tvCurrency.text = Prefs.getCurrency().getName()
 
-        tvTotalAmount.text = order.summa.toString() + " " + Prefs.getCurrency().getName()
+        tvTotalAmount.text = String.format("%.2f", order.summa).replace(",", ".")  + " " + Prefs.getCurrency().getName()
 
         cardViewOk.setOnClickListener {
             viewModel.createOrder(order)

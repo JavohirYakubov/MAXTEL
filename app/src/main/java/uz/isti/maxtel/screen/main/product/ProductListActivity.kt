@@ -100,9 +100,11 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
                 edSearch.visibility = View.GONE
                 imgSearch.setImageResource(R.drawable.ic_search_black_24dp)
                 edSearch.setText("")
+                tvTitle.visibility = View.VISIBLE
             }else{
                 edSearch.visibility = View.VISIBLE
                 imgSearch.setImageResource(R.drawable.ic_clear_black_24dp)
+                tvTitle.visibility = View.GONE
             }
         }
 
