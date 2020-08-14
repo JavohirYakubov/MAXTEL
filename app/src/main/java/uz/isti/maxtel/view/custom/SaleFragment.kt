@@ -48,7 +48,6 @@ class SaleFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        tvBonus.text = activity?.getString(R.string.you_get_bonus,  Prefs.getClientInfo()!!.forRegDiscount.toString())
 
         imgDismiss.setOnClickListener {
             dismiss()

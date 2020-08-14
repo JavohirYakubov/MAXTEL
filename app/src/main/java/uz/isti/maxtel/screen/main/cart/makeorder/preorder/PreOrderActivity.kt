@@ -54,8 +54,21 @@ class PreOrderActivity : BaseActivity() {
         }
 
 
-        tvProductAmount.text = String.format("%.2f", productAmount).replace(",", ".") + " " + Prefs.getCurrency().getName()
-        tvCurrency.text = Prefs.getCurrency().getName()
+        if (order.delivery == 0){
+            tvOrderType.text = getString(R.string.delivery)
+        }else{
+            tvOrderType.text = getString(R.string.pickup)
+        }
+
+        if (order.payme){
+            tvPaymentType.text = getString(R.string.payme)
+        }else{
+            tvPaymentType.text = getString(R.string.cashback)
+        }
+
+        tvProductAmount.text = String.format("%.2f", productAmount).replace(",", ".") + " " + (if (order.dollar) "$" else "сум")
+        tvDeliveryAmount.text = String.format("%.2f", order.deliverySumma).replace(",", ".") + "сум"
+        tvCurrency.text =  (if (order.dollar) "$" else "сум")
 
         tvTotalAmount.text = String.format("%.2f", order.summa).replace(",", ".")  + " " + Prefs.getCurrency().getName()
 

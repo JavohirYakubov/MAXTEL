@@ -26,6 +26,7 @@ import uz.isti.maxtel.model.ProductModel
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.cart.makeorder.MakeOrderActivity
 import uz.isti.maxtel.utils.Constants
+import uz.isti.maxtel.utils.Constants.Companion.EVENT_UPDATE_CART
 import uz.isti.maxtel.utils.Prefs
 import uz.isti.maxtel.view.adapter.CartProductsAdapter
 import uz.isti.maxtel.view.adapter.CartProductsListener
@@ -122,7 +123,7 @@ class CartFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         }
 
         Prefs.setCartModel(CartEventModel(Constants.EVENT_UPDATE_CART, adapter?.itemCount ?: 0, totalAmount))
-        EventBus.getDefault().post(Prefs.getCartModel())
+        EventBus.getDefault().post(EventModel(EVENT_UPDATE_CART, 0))
         tvTotalAmount.text = totalAmount.formattedAmount()
     }
 

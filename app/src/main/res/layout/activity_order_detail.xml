@@ -122,6 +122,20 @@
                                 android:textSize="12sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="#B0B0B0"
+                                android:text="@string/order_type_"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="#B0B0B0"
+                                android:text="@string/payment_type_"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="#B0B0B0"
                                 android:text="@string/product_currency_"/>
                             <TextView
                                 android:layout_width="wrap_content"
@@ -143,6 +157,22 @@
                                 android:textSize="12sp"
                                 android:textColor="@color/black"
                                 android:text=""/>
+                            <TextView
+                                android:id="@+id/tvOrderType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/black"
+                                android:text="UZS"/>
+                            <TextView
+                                android:id="@+id/tvPaymentType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/black"
+                                android:text="UZS"/>
                             <TextView
                                 android:id="@+id/tvCurrency"
                                 android:layout_width="wrap_content"
@@ -271,6 +301,30 @@
                             android:textSize="14sp"
                             android:textColor="@color/colorAccent"
                             android:textStyle="bold"
+                            android:text="@string/delivery_price"/>
+                        <TextView
+                            android:id="@+id/tvDeliveryAmount"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_marginLeft="8dp"
+                            android:textColor="@color/colorAccent"
+                            tools:text="1000 000"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="@color/colorAccent"
+                            android:textStyle="bold"
                             android:text="@string/total_amount__"/>
                         <TextView
                             android:id="@+id/tvTotalAmount"
@@ -284,63 +338,11 @@
                             tools:text="1000 000"/>
                     </LinearLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:text="@string/fullname_"/>
-                        <TextView
-                            android:id="@+id/tvFullName"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="Amount"/>
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:textColor="@color/black"
-                            android:text="@string/phone_"/>
-                        <TextView
-                            android:id="@+id/tvPhone"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="right"
-                            android:layout_marginLeft="8dp"
-                            android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="Amount"/>
-                    </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
+    </LinearLayout>
     <ImageView
         android:id="@+id/imgBack"
         android:layout_width="wrap_content"

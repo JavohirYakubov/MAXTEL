@@ -32,7 +32,7 @@
     <string name="cashback">Наличные</string>
     <string name="payme">Payme</string>
     <string name="order_type">Тип заказа</string>
-    <string name="delivery">Бесплатная доставка</string>
+    <string name="delivery">Доставка</string>
     <string name="pickup">Самовывоз</string>
     <string name="delivery_address">Адрес доставки</string>
     <string name="comment">Комментарий</string>

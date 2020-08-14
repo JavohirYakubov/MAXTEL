@@ -27,6 +27,7 @@ import uz.isti.maxtel.model.BasketModel
 import uz.isti.maxtel.model.EventModel
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.utils.Constants
+import uz.isti.maxtel.utils.Constants.Companion.EVENT_UPDATE_BASKET
 import uz.isti.maxtel.utils.Prefs
 
 /**
@@ -122,6 +123,7 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
                     activity?.showSuccess(getString(R.string.product_removed))
                 }
                 listener.onHideDialog()
+                EventBus.getDefault().post(EventModel(EVENT_UPDATE_BASKET, 0))
                 dismiss()
             }
         }

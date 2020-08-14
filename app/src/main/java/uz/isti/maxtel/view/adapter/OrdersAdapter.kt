@@ -14,11 +14,12 @@ class OrdersAdapter(val list: List<OrderModel>, listener: BaseAdapterListener): 
         val status = listOf(
             holder.itemView.context.getString(R.string.accepted),
             holder.itemView.context.getString(R.string.making_status),
-            holder.itemView.context.getString(R.string.order_maked)
+            holder.itemView.context.getString(R.string.on_way),
+            holder.itemView.context.getString(R.string.completed)
         )
 
         val item = list[position]
         holder.itemView.tvId.text = holder.itemView.context.getString(R.string.order_number) + " #${item.number}"
-        holder.itemView.tvStatus.text = status[item.status - 1]
+        holder.itemView.tvStatus.text = status[item.status]
     }
 }

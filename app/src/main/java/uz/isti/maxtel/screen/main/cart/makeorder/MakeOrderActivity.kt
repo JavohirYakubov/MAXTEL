@@ -32,6 +32,7 @@ class MakeOrderActivity : BaseActivity() {
     var address: AddressModel? = null
     lateinit var products: List<ProductModel>
     var totalAmount = 0.0
+    var deliveryAmount = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,24 +65,47 @@ class MakeOrderActivity : BaseActivity() {
             startActivity<MapActivity>()
         }
 
-        flAddress.visibility = View.VISIBLE
+        rbUSD.setOnClickListener {
+            rbCashback.isChecked = true
+        }
 
-        if (Prefs.getCurrency() == CurrencyEnum.USD){
-            rbUSD.isChecked = true
-        }else{
-            rbUZS.isChecked = true
+        rbPayme.setOnClickListener {
+            if (rbUSD.isChecked){
+                rbCashback.isChecked = true
+            }
+        }
+
+        rbDelivery.setOnClickListener {
+            flAddress.visibility = View.VISIBLE
+            if (rbDelivery.isChecked){
+                tvDeliveryAmount.visibility = View.VISIBLE
+            }else{
+                tvDeliveryAmount.visibility = View.GONE
+            }
+        }
+
+        rbPickUp.setOnClickListener {
+            flAddress.visibility = View.GONE
+            if (rbDelivery.isChecked){
+                tvDeliveryAmount.visibility = View.VISIBLE
+            }else{
+                tvDeliveryAmount.visibility = View.GONE
+            }
         }
 
         cardViewOk.setOnClickListener {
-
+            if (address == null && rbDelivery.isChecked){
+                showWarning(getString(R.string.select_delivery_address))
+                return@setOnClickListener
+            }
             var items = products.map {
                 MakeOrderProductModel(
                     it.name,
                     it.id,
-                    if(Prefs.getCurrency() == CurrencyEnum.USD) it.price else it.price * Prefs.getClientInfo()!!.currency,
+                    if(rbUSD.isChecked) it.price else it.price * Prefs.getClientInfo()!!.currency,
                     it.cartCount.toDouble(),
                     edComment.text.toString(),
-                    (if(Prefs.getCurrency() == CurrencyEnum.USD) it.price else it.price * Prefs.getClientInfo()!!.currency) * it.cartCount
+                    (if(rbUSD.isChecked) it.price else it.price * Prefs.getClientInfo()!!.currency) * it.cartCount
                 )
             }
 
@@ -98,9 +122,13 @@ class MakeOrderActivity : BaseActivity() {
                 address?.lon.toString(),
                 address?.lat.toString(),
                 edAddress.text.toString(),
+                if (rbDelivery.isChecked) 0 else 1,
+                if (rbDelivery.isChecked) deliveryAmount else 0.0,
+                rbPayme.isChecked,
                 address?.address ?: "",
                 totalAmount,
-                items
+                items,
+                rbUSD.isChecked
             )
 
             startActivity<PreOrderActivity>(Constants.EXTRA_DATA, order)
@@ -127,6 +155,14 @@ class MakeOrderActivity : BaseActivity() {
         val userInfo = Prefs.getClientInfo()
         edFullName.setText( userInfo?.name )
         edPhone.setText( userInfo?.phone )
+
+        if (Prefs.getCurrency() == CurrencyEnum.USD){
+            rbUSD.isChecked = true
+            rbCashback.isChecked = true
+        }else{
+            rbUZS.isChecked = true
+        }
+
     }
 
     override fun updateData() {
@@ -149,21 +185,32 @@ class MakeOrderActivity : BaseActivity() {
     }
 
     fun setAddressData(){
-        if (address != null && Prefs.getStoreInfo() != null){
+        val userInfo = Prefs.getClientInfo()
+        if (address != null && Prefs.getStoreInfo() != null && userInfo != null){
             val store = Prefs.getStoreInfo()
             var results = FloatArray(10)
             Location.distanceBetween(store?.latitude?.toDoubleOrNull() ?: 0.0, store?.longitude?.toDoubleOrNull() ?: 0.0,
                 address?.lat ?: 0.0, address?.lon ?: 0.0, results)
             var km = results[0] / 1000.0
 
-            if (km.toInt() > (store?.radius ?: 0) && (store?.radius ?: 0) != 0){
-                showWarning(getString(R.string.max_radius_delivery, (store?.radius ?: 0).toString()))
-                address = null
-                return
+//            if (km.toInt() > (store?.radius ?: 0) && (store?.radius ?: 0) != 0){
+//                showWarning(getString(R.string.max_radius_delivery, (store?.radius ?: 0).toString()))
+//                address = null
+//                return
+//            }
+            deliveryAmount = userInfo.minimalDostavkaSumma
+            if (km > userInfo.minimalDostavkaKm){
+                deliveryAmount += userInfo.kmSumma * km
             }
 
-
+            tvDeliveryAmount.text = getString(R.string.delivery_price) + " " + deliveryAmount.formattedAmountWithoutRate(true, currency = "сум")
             edAddress.setText(address?.address)
+
+            if (rbDelivery.isChecked){
+                tvDeliveryAmount.visibility = View.VISIBLE
+            }else{
+                tvDeliveryAmount.visibility = View.GONE
+            }
         }
     }
 

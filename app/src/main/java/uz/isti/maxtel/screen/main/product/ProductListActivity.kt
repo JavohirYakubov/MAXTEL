@@ -25,6 +25,7 @@ import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.product.detail.ProductDetailFragment
 import uz.isti.maxtel.screen.main.product.detail.ProductDetailListener
 import uz.isti.maxtel.utils.Constants
+import uz.isti.maxtel.utils.Constants.Companion.EVENT_UPDATE_CART
 import uz.isti.maxtel.utils.Prefs
 import uz.isti.maxtel.view.adapter.ProductsAdapter
 import uz.isti.maxtel.view.adapter.ProductsAdapterListener
@@ -155,6 +156,7 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
     }
 
     override fun updateData() {
+        checkCart()
         if (viewModel.productsData.value != null ){
             recycler.layoutManager = GridLayoutManager(this, 2)
             adapter = ProductsAdapter(viewModel.productsData?.value ?: emptyList(), object:
@@ -187,7 +189,9 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
 
     @Subscribe
     fun onEvent(event: EventModel<Int>){
-
+        if (event.event == EVENT_UPDATE_CART){
+            checkCart()
+        }
     }
 
     fun checkCart(){

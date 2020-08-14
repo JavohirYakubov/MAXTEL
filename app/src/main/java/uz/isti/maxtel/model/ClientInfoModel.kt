@@ -9,13 +9,9 @@ data class ClientInfoModel(
     val date: String,
     val jins: String,
     val token: String,
-    val forRegDiscount: Int,
-    val usuallyDiscountMin1: Int,
-    val usuallyDiscountMin2: Int,
-    val usuallyDiscountMin3: Int,
-    val usuallyDiscount1: Int,
-    val usuallyDiscount2: Int,
-    val usuallyDiscount3: Int,
+    val minimalDostavkaSumma: Double,
+    val minimalDostavkaKm: Double,
+    val kmSumma: Double,
     val marketName: String?,
     val currency: Double
 ): Serializable
