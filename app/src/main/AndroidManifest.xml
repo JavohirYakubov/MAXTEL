@@ -24,16 +24,25 @@
         <activity
             android:name=".screen.main.news.NewsActivity"
             android:label="@string/title_activity_news"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".screen.main.aboutapp.AboutAppActivity"></activity>
-        <activity android:name=".screen.main.rating.RatingActivity" />
-        <activity android:name=".screen.main.orders.detail.OrderDetailActivity" />
-        <activity android:name=".screen.main.orders.OrdersActivity" />
-        <activity android:name=".screen.main.profile.edit.ProfileEditActivity" />
-        <activity android:name=".screen.main.cart.makeorder.preorder.success.SuccessOrderActivity" />
-        <activity android:name=".screen.main.cart.makeorder.preorder.PreOrderActivity" />
-        <activity android:name=".screen.main.webview.AppWebViewActivity" />
+            android:name=".screen.main.aboutapp.AboutAppActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".screen.main.rating.RatingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screen.main.orders.detail.OrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.orders.OrdersActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.profile.edit.ProfileEditActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screen.main.cart.makeorder.preorder.success.SuccessOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.cart.makeorder.preorder.PreOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.webview.AppWebViewActivity"
+            android:screenOrientation="portrait" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -54,17 +63,25 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".screen.main.cart.makeorder.MakeOrderActivity" />
-        <activity android:name=".screen.auth.selectregion.SelectRegionActivity" />
-        <activity android:name=".screen.main.product.ProductListActivity" />
-        <activity android:name=".screen.main.manufacturer.ManufacturerListActivity" />
-        <activity android:name=".screen.auth.SignActivity" />
-        <activity android:name=".screen.main.map.MapActivity" />
-        <activity android:name=".screen.main.actreport.ActReportActivity" />
+        <activity android:name=".screen.main.cart.makeorder.MakeOrderActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.auth.selectregion.SelectRegionActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.product.ProductListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.manufacturer.ManufacturerListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.auth.SignActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.map.MapActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".screen.main.actreport.ActReportActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".screen.main.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".screen.splash.SplashActivity">
+        <activity android:name=".screen.splash.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

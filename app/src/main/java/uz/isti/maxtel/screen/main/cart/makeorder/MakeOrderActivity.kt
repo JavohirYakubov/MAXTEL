@@ -200,7 +200,7 @@ class MakeOrderActivity : BaseActivity() {
 //            }
             deliveryAmount = userInfo.minimalDostavkaSumma
             if (km > userInfo.minimalDostavkaKm){
-                deliveryAmount += userInfo.kmSumma * km
+                deliveryAmount += userInfo.kmSumma * (km - userInfo.minimalDostavkaKm)
             }
 
             tvDeliveryAmount.text = getString(R.string.delivery_price) + " " + deliveryAmount.formattedAmountWithoutRate(true, currency = "сум")

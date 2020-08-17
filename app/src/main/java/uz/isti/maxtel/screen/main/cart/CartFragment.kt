@@ -56,9 +56,7 @@ class CartFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         })
 
         viewModel.progressCartProducts.observe(this, Observer {inProgress ->
-            getBaseActivity {
-                it.setProgress(inProgress)
-            }
+            swipeRefresh.isRefreshing = inProgress
         })
 
         viewModel.cartProductsData.observe(this, Observer {
