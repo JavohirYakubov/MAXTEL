@@ -7,6 +7,7 @@ import uz.isti.maxtel.R
 import uz.isti.maxtel.base.formattedAmount
 import uz.isti.maxtel.base.loadImage
 import uz.isti.maxtel.model.ProductModel
+import uz.isti.maxtel.utils.Prefs
 
 interface ProductsAdapterListener: BaseAdapterListener{
     fun getPage(index: Int)
@@ -18,6 +19,11 @@ class ProductsAdapter(var list: List<ProductModel>, val handler: ProductsAdapter
         val item = getItem<ProductModel>(position)
         holder.itemView.tvTitle.text = item.name
         holder.itemView.imgProduct.loadImage(App.imageBaseUrl + item.image)
+        if (Prefs.getToken().isNullOrEmpty()){
+            holder.itemView.tvPrice.visibility = View.INVISIBLE
+        }else{
+            holder.itemView.tvPrice.visibility = View.VISIBLE
+        }
         holder.itemView.tvPrice.text = item?.price?.formattedAmount()
 
         if (item.cartCount > 0){

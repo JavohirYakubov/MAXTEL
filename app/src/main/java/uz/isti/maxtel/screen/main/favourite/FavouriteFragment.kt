@@ -12,12 +12,10 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
 import uz.isti.maxtel.R
-import uz.isti.maxtel.base.BaseFragment
-import uz.isti.maxtel.base.showError
-import uz.isti.maxtel.base.showInfo
-import uz.isti.maxtel.base.startActivity
+import uz.isti.maxtel.base.*
 import uz.isti.maxtel.model.EventModel
 import uz.isti.maxtel.model.ProductModel
+import uz.isti.maxtel.screen.auth.SignActivity
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.product.detail.ProductDetailFragment
 import uz.isti.maxtel.screen.main.product.detail.ProductDetailListener
@@ -59,6 +57,11 @@ class FavouriteFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun loadData() {
+        if (Prefs.getToken().isNullOrEmpty()){
+            activity?.showWarning(getString(R.string.please_use_all_features_registr))
+            activity?.startActivity<SignActivity>()
+            return
+        }
         viewModel.getFavouriteProducts()
     }
 

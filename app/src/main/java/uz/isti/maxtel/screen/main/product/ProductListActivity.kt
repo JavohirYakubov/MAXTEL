@@ -14,12 +14,10 @@ import kotlinx.android.synthetic.main.select_currency_dialog.view.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import uz.isti.maxtel.R
-import uz.isti.maxtel.base.BaseActivity
-import uz.isti.maxtel.base.formattedAmount
-import uz.isti.maxtel.base.showError
-import uz.isti.maxtel.base.startClearActivity
+import uz.isti.maxtel.base.*
 import uz.isti.maxtel.model.*
 import uz.isti.maxtel.model.enum.CurrencyEnum
+import uz.isti.maxtel.screen.auth.SignActivity
 import uz.isti.maxtel.screen.main.MainActivity
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.product.detail.ProductDetailFragment
@@ -166,6 +164,11 @@ class ProductListActivity  : BaseActivity(), SwipeRefreshLayout.OnRefreshListene
                 }
 
                 override fun onClickItem(item: Any?) {
+                    if (Prefs.getToken().isNullOrEmpty()){
+                        showWarning(getString(R.string.please_use_all_features_registr))
+                        startActivity<SignActivity>()
+                        return
+                    }
                     val item = item as ProductModel
                     val fragment = ProductDetailFragment(object: ProductDetailListener{
                         override fun onHideDialog() {

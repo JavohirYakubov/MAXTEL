@@ -265,8 +265,16 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
     }
 
     fun setClientDataNav(){
+
         val user = Prefs.getClientInfo()
         val headerView = navigation.getHeaderView(0)
+        if (Prefs.getToken().isNullOrEmpty()){
+            headerView.tvPersonName.visibility = View.GONE
+            headerView.tvPhone.visibility = View.GONE
+            headerView.imgProfile.visibility = View.GONE
+            return
+        }
+
         headerView.tvPersonName.text = user?.name
         headerView.tvPhone.text = user?.phone
         headerView.imgCurrency.setImageResource(Prefs.getCurrency().getImage())
@@ -310,21 +318,6 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
         edSearch.visibility = View.GONE
 
         nav_bottom.selectedItemId = R.id.homeFragment
-//        if (homeFragment.isAdded && homeFragment.isVisible){
-//
-//        }else{
-//            hideFragments()
-//            if (!homeFragment.isAdded){
-//                supportFragmentManager.beginTransaction()
-//                    .add(R.id.container, homeFragment)
-//                    .commitAllowingStateLoss()
-//            }else{
-//                supportFragmentManager.beginTransaction()
-//                    .show(homeFragment)
-//                    .commitAllowingStateLoss()
-//            }
-//        }
-//        true
     }
 
     override fun onBackPressed() {
@@ -332,8 +325,10 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
     }
 
     override fun loadData() {
-        viewModel.clientInfo(ClientInfoRequest(fcm_token = Prefs.getFCM() ?: ""))
-        viewModel.getCartProducts()
+        if (!Prefs.getToken().isNullOrEmpty()){
+            viewModel.clientInfo(ClientInfoRequest(fcm_token = Prefs.getFCM() ?: ""))
+            viewModel.getCartProducts()
+        }
         if (Prefs.getStore() != null){
             viewModel.getStoreInfo()
         }
@@ -372,6 +367,11 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
         if (p0.itemId == R.id.actionNews){
             startActivity<NewsActivity>()
         }else if (p0.itemId == R.id.actionAct){
+            if (Prefs.getToken().isNullOrEmpty()){
+                showWarning(getString(R.string.please_use_all_features_registr))
+                startActivity<SignActivity>()
+                return true
+            }
             startActivity<ActReportActivity>()
         }else if (p0.itemId == R.id.actionShareApp){
             val shareIntent = Intent()
@@ -384,8 +384,18 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
 
             startActivity(Intent.createChooser(shareIntent,"Отправить своим друзьям."))
         }else if(p0.itemId == R.id.actionProfile){
+            if (Prefs.getToken().isNullOrEmpty()){
+                showWarning(getString(R.string.please_use_all_features_registr))
+                startActivity<SignActivity>()
+                return true
+            }
             startActivity<ProfileEditActivity>()
         }else if(p0.itemId == R.id.actionLogout){
+            if (Prefs.getToken().isNullOrEmpty()){
+                showWarning(getString(R.string.please_use_all_features_registr))
+                startActivity<SignActivity>()
+                return true
+            }
             Prefs.clearAll()
             startClearActivity<SplashActivity>()
             finish()

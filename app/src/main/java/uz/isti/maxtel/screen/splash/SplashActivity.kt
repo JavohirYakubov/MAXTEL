@@ -113,7 +113,7 @@ class SplashActivity : BaseActivity() {
             LocaleManager.setNewLocale(this, "uz")
             bottomSheetDialog?.dismiss()
 
-            startClearTopActivity<SignActivity>()
+            startClearTopActivity<MainActivity>()
             finish()
         }
         viewLang.tvRu.setOnClickListener {
@@ -121,7 +121,7 @@ class SplashActivity : BaseActivity() {
             LocaleManager.setNewLocale(this, "en")
             bottomSheetDialog?.dismiss()
 
-            startClearTopActivity<SignActivity>()
+            startClearTopActivity<MainActivity>()
             finish()
         }
 

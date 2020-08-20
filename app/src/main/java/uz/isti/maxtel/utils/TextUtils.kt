@@ -42,7 +42,7 @@ class TextUtils {
             if (!withRate){
 
             }else if (Prefs.getCurrency() == CurrencyEnum.UZS){
-                totalAmount *= Prefs.getClientInfo()!!.currency
+                totalAmount *= (Prefs.getClientInfo()?.currency ?: 1.0)
             }
             val formatSymbols = DecimalFormatSymbols(Locale.ENGLISH)
             formatSymbols.decimalSeparator = '.'

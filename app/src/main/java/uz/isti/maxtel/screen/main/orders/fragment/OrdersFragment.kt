@@ -14,10 +14,13 @@ import kotlinx.android.synthetic.main.fragment_orders.*
 import uz.isti.maxtel.R
 import uz.isti.maxtel.base.BaseFragment
 import uz.isti.maxtel.base.showError
+import uz.isti.maxtel.base.showWarning
 import uz.isti.maxtel.base.startActivity
+import uz.isti.maxtel.screen.auth.SignActivity
 import uz.isti.maxtel.screen.main.MainViewModel
 import uz.isti.maxtel.screen.main.orders.detail.OrderDetailActivity
 import uz.isti.maxtel.utils.Constants
+import uz.isti.maxtel.utils.Prefs
 import uz.isti.maxtel.view.adapter.BaseAdapterListener
 import uz.isti.maxtel.view.adapter.OrdersAdapter
 import java.io.Serializable
@@ -47,6 +50,11 @@ class OrdersFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     override fun loadData() {
+        if (Prefs.getToken().isNullOrEmpty()){
+            activity?.showWarning(getString(R.string.please_use_all_features_registr))
+            activity?.startActivity<SignActivity>()
+            return
+        }
         viewModel.getOrders()
     }
 
