@@ -79,7 +79,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".screen.main.MainActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden"
+            android:screenOrientation="portrait"/>
         <activity android:name=".screen.splash.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
