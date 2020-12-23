@@ -47,9 +47,15 @@ class TextUtils {
             val formatSymbols = DecimalFormatSymbols(Locale.ENGLISH)
             formatSymbols.decimalSeparator = '.'
             formatSymbols.groupingSeparator = ' '
-            val formatter = DecimalFormat("###,###.##", formatSymbols)
-            var result = formatter.format(totalAmount)
-            return result + (if (withCurrency) " ${currency}" else "")
+            if (Prefs.getCurrency() != CurrencyEnum.UZS){
+                val formatter = DecimalFormat("###,###.##", formatSymbols)
+                var result = formatter.format(totalAmount)
+                return result + (if (withCurrency) " ${currency}" else "")
+            }else{
+                val formatter = DecimalFormat("###,###", formatSymbols)
+                var result = formatter.format(totalAmount)
+                return result + (if (withCurrency) " ${currency}" else "")
+            }
         }
     }
 }

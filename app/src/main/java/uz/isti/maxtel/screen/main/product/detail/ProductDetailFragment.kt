@@ -15,6 +15,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_product_detail.*
+import kotlinx.android.synthetic.main.product_item_layout.view.*
 import org.greenrobot.eventbus.EventBus
 import uz.isti.maxtel.App
 
@@ -164,6 +165,17 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
             if (it.id == product?.id){
                 cartCount = it.count
             }
+        }
+
+        if (product?.discount_percent!! > 0){
+            cardViewDiscount.visibility = View.VISIBLE
+            flProductOldPrice.visibility = View.VISIBLE
+
+            tvDiscountPercent.text = "-" + product?.discount_percent.toString() + "%"
+            tvProductOldPrice.text = product?.old_price?.formattedAmount()
+        }else{
+            cardViewDiscount.visibility = View.GONE
+            flProductOldPrice.visibility = View.GONE
         }
 
         imgProduct.loadImage(App.imageBaseUrl + product?.image)

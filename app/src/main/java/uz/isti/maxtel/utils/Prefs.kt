@@ -43,7 +43,7 @@ class Prefs {
         }
 
         fun getCurrency(): CurrencyEnum{
-            return Hawk.get(PREF_DISTRICT, CurrencyEnum.UZS)
+            return CurrencyEnum.UZS
         }
 
         fun setCurrency(value: CurrencyEnum){

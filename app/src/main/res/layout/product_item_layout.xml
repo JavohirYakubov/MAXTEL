@@ -54,6 +54,16 @@
                     android:padding="4dp"
                     tools:text="12"
                     android:background="@drawable/circle_shape"/>
+
+                <TextView
+                    android:id="@+id/tvDiscountPercent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:padding="8dp"
+                    android:background="@drawable/top_left_bottom_right_shape"
+                    android:textColor="@color/white"
+                    android:text="-10%"/>
             </FrameLayout>
 
             <LinearLayout
@@ -64,7 +74,30 @@
                 android:layout_marginRight="8dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
+                <RelativeLayout
+                    android:id="@+id/flProductOldPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp">
 
+                    <TextView
+                        android:id="@+id/tvProductOldPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="50 000 so'm"
+                        android:textColor="@color/gray_text"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_centerVertical="true"
+                        android:layout_alignStart="@id/tvProductOldPrice"
+                        android:layout_alignEnd="@id/tvProductOldPrice"/>
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/tvPrice"
                     android:layout_width="wrap_content"
@@ -73,6 +106,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/colorAccent"
                     tools:text="1 000 000"/>
+
             </LinearLayout>
 
             <TextView

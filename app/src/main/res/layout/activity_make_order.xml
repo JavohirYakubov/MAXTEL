@@ -134,6 +134,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     android:textColor="@color/black"
                     android:layout_marginTop="16dp"
                     android:text="@string/product_currency"/>
@@ -141,6 +142,7 @@
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:orientation="horizontal">
                     <RadioButton
                         android:id="@+id/rbUZS"
@@ -184,6 +186,7 @@
                             android:id="@+id/rbPayme"
                             android:layout_width="0dp"
                             android:layout_weight="1"
+                            android:visibility="gone"
                             android:text="@string/payme"
                             android:layout_height="wrap_content"/>
                     </RadioGroup>

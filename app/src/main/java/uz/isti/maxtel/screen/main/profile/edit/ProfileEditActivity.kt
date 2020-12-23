@@ -60,7 +60,6 @@ class ProfileEditActivity : BaseActivity() {
 
         btnEdit.setOnClickListener {
             viewModel.clientInfo(ClientInfoRequest(
-                Prefs.getToken(),
                 fio = edFullName.text.toString(),
                 date = edBirthDay.text.toString().replace(".", ""),
                 marketName = edStore.text.toString()
