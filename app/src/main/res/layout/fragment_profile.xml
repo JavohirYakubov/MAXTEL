@@ -55,6 +55,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/lyCashback"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:layout_gravity="center"
+                            android:textColor="@color/black"
+                            android:text="Кешбек"/>
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardViewDiscount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_gravity="bottom"
+                            tools:visibility="visible"
+                            android:layout_margin="8dp"
+                            app:contentPadding="4dp"
+                            app:cardCornerRadius="16dp"
+                            app:cardBackgroundColor="@color/cart_color">
+                            <TextView
+                                android:id="@+id/tvDiscountPercent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="14sp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:textColor="@color/white"
+                                android:text="0 sum"/>
+                        </androidx.cardview.widget.CardView>
+                    </LinearLayout>
                     <LinearLayout
                         android:id="@+id/lyProfile"
                         android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package uz.isti.maxtel.model
 import uz.isti.maxtel.model.enum.CurrencyEnum
 import uz.isti.maxtel.utils.Prefs
 import java.io.Serializable
+import java.util.function.DoubleBinaryOperator
 
 data class MakeOrderModel(
     val skladid: Int,
@@ -15,7 +16,10 @@ data class MakeOrderModel(
     val deliveryAddress: String,
     val summa: Double,
     val array: List<MakeOrderProductModel>,
-    val dollar: Boolean = Prefs.getCurrency() == CurrencyEnum.USD
+    val dollar: Boolean = Prefs.getCurrency() == CurrencyEnum.USD,
+    val cashback: Boolean,
+    val cashbackForOrder: Double,
+    val cashbackAmount: Double
 ): Serializable
 
 data class MakeOrderProductModel(

@@ -43,6 +43,7 @@ class CartFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
     lateinit var viewModel: MainViewModel
     var adapter: CartProductsAdapter? = null
     var totalAmount = 0.0
+    var discountAmount = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +73,7 @@ class CartFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 //                    it.showWarning(getString(R.string.minimum_summa, (Prefs.getStoreInfo()?.minimalSavdoSummasi ?: 0).toDouble().formattedAmount()))
 //                    return@getBaseActivity
 //                }
-                it.startActivity<MakeOrderActivity>(Constants.EXTRA_DATA, viewModel.cartProductsData.value as Serializable, Constants.EXTRA_DATA_2, totalAmount)
+                it.startActivity<MakeOrderActivity>(Constants.EXTRA_DATA, viewModel.cartProductsData.value as Serializable, Constants.EXTRA_DATA_2, totalAmount, Constants.EXTRA_DATA_3, discountAmount)
             }
         }
 
@@ -120,15 +121,25 @@ class CartFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     fun setTotalAmounts(){
         totalAmount = 0.0
+        discountAmount = 0.0
+
         adapter?.items?.forEach {
             val item = it as ProductModel
             totalAmount += item.cartCount * item.price!!
-
+            if (item.discount_percent > 0){
+                discountAmount += (item.cartCount * item.price * item.discount_percent / 100) * Prefs.getClientInfo()!!.currency
+            }
         }
 
         Prefs.setCartModel(CartEventModel(Constants.EVENT_UPDATE_CART, adapter?.itemCount ?: 0, totalAmount))
         EventBus.getDefault().post(EventModel(EVENT_UPDATE_CART, 0))
         tvTotalAmount.text = totalAmount.formattedAmount()
+        if (discountAmount > 0){
+            lyCashback.visibility = View.VISIBLE
+            tvDiscountPercent.text = discountAmount.formattedAmountWithCurrency("сум")
+        }else{
+            lyCashback.visibility = View.GONE
+        }
     }
 
     override fun setData() {

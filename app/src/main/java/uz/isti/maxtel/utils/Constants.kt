@@ -9,6 +9,7 @@ class Constants{
 
         const val EXTRA_DATA = "extra_data"
         const val EXTRA_DATA_2 = "extra_data_2"
+        const val EXTRA_DATA_3 = "extra_data_3"
         const val EXTRA_DATA_START_FRAGMENT = "extra_data_start_fragment"
 
         const val FRAGMENT_HOME = 0

@@ -18,6 +18,8 @@ data class OrderModel(
     val deliveryPerson: String,
     val deliveryPersonPhone: String,
     val payme: Boolean,
+    val cashback: Boolean,
+    val cashbackSumma: Double,
     val deliverySumma: Double,
     val summa: Double,
     val array: List<MakeOrderProductModel>,

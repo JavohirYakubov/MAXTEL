@@ -80,5 +80,15 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+        <TextView
+            android:id="@+id/tvDiscountPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:padding="8dp"
+            android:layout_gravity="right"
+            android:background="@drawable/bottom_left_shape"
+            android:textColor="@color/white"
+            android:text="10%"/>
     </androidx.cardview.widget.CardView>
 </FrameLayout>

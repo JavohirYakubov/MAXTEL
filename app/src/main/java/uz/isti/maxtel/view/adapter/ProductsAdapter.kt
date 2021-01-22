@@ -44,17 +44,13 @@ class ProductsAdapter(var list: List<ProductModel>, val handler: ProductsAdapter
 
         if (item.discount_percent > 0){
             holder.itemView.tvDiscountPercent.visibility = View.VISIBLE
-            holder.itemView.flProductOldPrice.visibility = View.VISIBLE
 
-            holder.itemView.tvDiscountPercent.text = "-" + item.discount_percent.toString() + "%"
-            holder.itemView.tvProductOldPrice.text = item.old_price.formattedAmount()
+            holder.itemView.tvDiscountPercent.text = item.discount_percent.toString() + "%"
         }else{
             holder.itemView.tvDiscountPercent.visibility = View.GONE
-            holder.itemView.flProductOldPrice.visibility = View.GONE
         }
         if (Prefs.getToken().isNullOrEmpty()){
             holder.itemView.tvPrice.visibility = View.INVISIBLE
-            holder.itemView.flProductOldPrice.visibility = View.INVISIBLE
         }else{
             holder.itemView.tvPrice.visibility = View.VISIBLE
             holder.itemView.tvPrice.visibility = View.VISIBLE

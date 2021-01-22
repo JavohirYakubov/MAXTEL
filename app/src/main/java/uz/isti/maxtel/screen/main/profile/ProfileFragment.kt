@@ -15,6 +15,7 @@ import uz.isti.maxtel.BuildConfig
 
 import uz.isti.maxtel.R
 import uz.isti.maxtel.base.BaseFragment
+import uz.isti.maxtel.base.formattedAmount
 import uz.isti.maxtel.base.startActivity
 import uz.isti.maxtel.base.startClearTopActivity
 import uz.isti.maxtel.screen.main.MainViewModel
@@ -40,6 +41,7 @@ class ProfileFragment : BaseFragment() {
 
         tvPersonName.text = user?.name
         tvPhone.text = user?.phone
+        tvDiscountPercent.text = user?.cashback.formattedAmount()
 
         lyProfile.setOnClickListener {
             getBaseActivity {

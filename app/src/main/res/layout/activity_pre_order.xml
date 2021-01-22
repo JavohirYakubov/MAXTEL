@@ -237,6 +237,53 @@
                                 android:textColor="@color/colorAccent"
                                 tools:text="1000 000"/>
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textColor="@color/colorAccent"
+                                android:textStyle="bold"
+                                android:text="Кешбек"/>
+                            <TextView
+                                android:id="@+id/tvCashback"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/colorAccent"
+                                tools:text="1000 000"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:textColor="@color/colorAccent"
+                                android:textStyle="bold"
+                                android:text="@string/amount_pay_from_cachback"/>
+                            <TextView
+                                android:id="@+id/tvCashbackAmount"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:gravity="right"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_marginLeft="8dp"
+                                android:textColor="@color/colorAccent"
+                                tools:text="1000 000"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

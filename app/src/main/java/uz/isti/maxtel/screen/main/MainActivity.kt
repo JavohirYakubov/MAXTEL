@@ -272,7 +272,15 @@ class MainActivity : BaseActivity(), SwipeRefreshLayout.OnRefreshListener, Navig
             headerView.tvPersonName.visibility = View.GONE
             headerView.tvPhone.visibility = View.GONE
             headerView.imgProfile.visibility = View.GONE
+            headerView.lyCashback.visibility = View.GONE
             return
+        }
+
+        if (Prefs.getClientInfo() != null){
+            headerView.lyCashback.visibility = View.VISIBLE
+            headerView.tvDiscountPercent.text = Prefs.getClientInfo()!!.cashback.formattedAmountWithCurrency("сум")
+        }else{
+            headerView.lyCashback.visibility = View.GONE
         }
 
         headerView.tvPersonName.text = user?.name

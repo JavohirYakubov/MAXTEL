@@ -4,6 +4,7 @@ import android.content.IntentFilter
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
@@ -139,6 +140,7 @@ class SignActivity : BaseActivity() {
                 tvComment.text = getString(R.string.please_input_code)
                 edPhone.isEnabled = false
                 tilCode.visibility = View.VISIBLE
+                startCountDownTimer()
             }
 
             SignState.REGISTRATION ->{
@@ -149,6 +151,7 @@ class SignActivity : BaseActivity() {
                 tilFullName.visibility = View.VISIBLE
                 tilStore.visibility = View.VISIBLE
                 tilBirthDay.visibility = View.VISIBLE
+                startCountDownTimer()
             }
         }
     }
@@ -179,6 +182,38 @@ class SignActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    fun startCountDownTimer(){
+        tvRefresh.visibility = View.VISIBLE
+        imgRefresh.visibility = View.GONE
+        val timer = object: CountDownTimer(60*2*1000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                try{
+                    val secs = millisUntilFinished/1000
+                    val formatted = "${(secs / 60).toString().padStart(2, '0')}:${(secs % 60).toString().padStart(2, '0')}"
+                    tvRefresh.text = formatted
+                }catch (e: Exception){
+
+                }
+            }
+
+            override fun onFinish() {
+                try {
+                    tvRefresh.visibility = View.GONE
+                    imgRefresh.visibility = View.VISIBLE
+
+                    cardViewRefresh.setOnClickListener {
+                        if (tvRefresh.visibility == View.GONE){
+                            state = SignState.PHONE
+                            changeState()
+                        }
+                    }
+                }catch (e: Exception){
+                }
+            }
+        }
+        timer.start()
     }
 
     fun initReceiver(){

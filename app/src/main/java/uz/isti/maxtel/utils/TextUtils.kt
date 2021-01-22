@@ -57,5 +57,18 @@ class TextUtils {
                 return result + (if (withCurrency) " ${currency}" else "")
             }
         }
+
+        fun getFormattedAmount(amount: Double?, currency: String): String{
+            if (amount == null){
+                return ""
+            }
+            var totalAmount = amount
+            val formatSymbols = DecimalFormatSymbols(Locale.ENGLISH)
+            formatSymbols.decimalSeparator = '.'
+            formatSymbols.groupingSeparator = ' '
+            val formatter = DecimalFormat("###,###", formatSymbols)
+            var result = formatter.format(totalAmount)
+            return result + " ${currency}"
+        }
     }
 }

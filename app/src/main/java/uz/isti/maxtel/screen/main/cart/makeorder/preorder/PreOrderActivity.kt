@@ -67,10 +67,12 @@ class PreOrderActivity : BaseActivity() {
         }
 
         tvProductAmount.text = String.format("%.2f", productAmount).replace(",", ".") + " " + (if (order.dollar) "$" else "сум")
-        tvDeliveryAmount.text = String.format("%.2f", order.deliverySumma).replace(",", ".") + "сум"
+        tvDeliveryAmount.text = String.format("%.2f", order.deliverySumma).replace(",", ".") + " сум"
         tvCurrency.text =  (if (order.dollar) "$" else "сум")
 
         tvTotalAmount.text = String.format("%.2f", order.summa).replace(",", ".")  + " " + Prefs.getCurrency().getName()
+        tvCashback.text = String.format("%.2f", order.cashbackForOrder).replace(",", ".")  + " сум"
+        tvCashbackAmount.text = String.format("%.2f", order.cashbackAmount).replace(",", ".")  + " сум"
 
         cardViewOk.setOnClickListener {
             viewModel.createOrder(order)

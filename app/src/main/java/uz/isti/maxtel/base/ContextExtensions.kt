@@ -88,10 +88,10 @@ inline fun <reified T : Activity> Context.startActivity(key: String, value: Seri
 inline fun <reified T : Activity> Context.startActivity(key: String, value: Serializable, key2: String, value2: Serializable) =
         this.startActivity(newIntent<T>(key, value, key2, value2))
 
-inline fun <reified T : Activity> Context.startActivity(key: String, value: String, key2: String, value2: String, key3: String, value3: String) =
+inline fun <reified T : Activity> Context.startActivity(key: String, value: Serializable, key2: String, value2: Serializable, key3: String, value3: Serializable) =
         this.startActivity(newIntent<T>(key, value, key2, value2, key3, value3))
 
-inline fun <reified T : Activity> Context.startActivity(key: String, value: String, key2: String, value2: String, key3: String, value3: Serializable?) =
+inline fun <reified T : Activity> Context.startActivity(key: String, value: String, key2: String, value2: String, key3: String, value3: String) =
         this.startActivity(newIntent<T>(key, value, key2, value2, key3, value3))
 
 inline fun <reified T : Activity> Context.startActivity(key: String, value: Parcelable) =
@@ -251,13 +251,7 @@ inline fun <reified T : Activity> Context.newIntent(key: String, value: String, 
 inline fun <reified T : Activity> Context.newIntent(key: String, value: Serializable, key2: String, value2: Serializable): Intent =
         Intent(this, T::class.java).putExtra(key, value).putExtra(key2, value2)
 
-inline fun <reified T : Activity> Context.newIntent(key: String, value: String?, key2: String, value2: String?, key3: String, value3: String?): Intent =
-        Intent(this, T::class.java).putExtra(key, value).putExtra(key2, value2).putExtra(key3, value3)
-
-inline fun <reified T : Activity> Context.newIntent(key: String, value: Boolean?, key2: String, value2: String?, key3: String, value3: String?): Intent =
-        Intent(this, T::class.java).putExtra(key, value).putExtra(key2, value2).putExtra(key3, value3)
-
-inline fun <reified T : Activity> Context.newIntent(key: String, value: String?, key2: String, value2: String?, key3: String, value3: Serializable?): Intent =
+inline fun <reified T : Activity> Context.newIntent(key: String, value: Serializable, key2: String, value2: Serializable, key3: String, value3: Serializable): Intent =
         Intent(this, T::class.java).putExtra(key, value).putExtra(key2, value2).putExtra(key3, value3)
 
 inline fun <reified T : Activity> Context.newIntent(key: String, value: String?, key2: String, value2: String?, key3: String, value3: String?, key4: String, value4: Array<String>): Intent =
@@ -322,6 +316,11 @@ fun Context.clearCookies() {
 
 fun Double?.formattedAmount(withCurrency: Boolean = true): String{
     return TextUtils.getFormattedAmount(this, withCurrency)
+}
+
+
+fun Double?.formattedAmountWithCurrency(currency: String): String{
+    return TextUtils.getFormattedAmount(this, currency)
 }
 
 fun Double?.formattedAmountWithoutRate(withCurrency: Boolean = true, currency: String): String{

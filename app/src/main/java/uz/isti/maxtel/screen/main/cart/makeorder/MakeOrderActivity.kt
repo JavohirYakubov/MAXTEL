@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,6 +33,7 @@ class MakeOrderActivity : BaseActivity() {
     var address: AddressModel? = null
     lateinit var products: List<ProductModel>
     var totalAmount = 0.0
+    var discountAmount = 0.0
     var deliveryAmount = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +46,7 @@ class MakeOrderActivity : BaseActivity() {
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         products = intent.getSerializableExtra(Constants.EXTRA_DATA) as List<ProductModel>
         totalAmount = intent.getDoubleExtra(Constants.EXTRA_DATA_2, 0.0)
+        discountAmount = intent.getDoubleExtra(Constants.EXTRA_DATA_3, 0.0)
 
         viewModel.progress.observe(this, Observer {
             setProgress(it)
@@ -128,10 +131,34 @@ class MakeOrderActivity : BaseActivity() {
                 address?.address ?: "",
                 totalAmount,
                 items,
-                rbUSD.isChecked
+                false,
+                chbCashback.isChecked,
+                discountAmount,
+                edCashbackAmount.text.toString().toDoubleOrNull() ?: 0.0
             )
 
             startActivity<PreOrderActivity>(Constants.EXTRA_DATA, order)
+        }
+
+        lyCashback.visibility = View.GONE
+
+        chbCashback.setOnClickListener {
+            if (!chbCashback.isChecked){
+                lyCashbackAmount.visibility = View.GONE
+            }else{
+                lyCashbackAmount.visibility = View.VISIBLE
+                tvDiscountPercent.text = Prefs.getClientInfo()!!.cashback.formattedAmountWithCurrency("сум")
+            }
+        }
+
+        edCashbackAmount.addTextChangedListener {
+            if (edCashbackAmount.text.toString().toDoubleOrNull() != null){
+                if (edCashbackAmount.text.toString().toDouble() > Prefs.getClientInfo()!!.cashback){
+                    edCashbackAmount.setText(String.format("%.0f", Prefs.getClientInfo()!!.cashback))
+                }
+            }else{
+
+            }
         }
 
         NetworkUtils.registerNetworkStatusChangedListener(object: NetworkUtils.OnNetworkStatusChangedListener{
@@ -155,6 +182,13 @@ class MakeOrderActivity : BaseActivity() {
         val userInfo = Prefs.getClientInfo()
         edFullName.setText( userInfo?.name )
         edPhone.setText( userInfo?.phone )
+
+        if (Prefs.getClientInfo()!!.cashback > 0){
+            lyCashback.visibility = View.VISIBLE
+            tvDiscountPercent.text = Prefs.getClientInfo()!!.cashback.formattedAmountWithCurrency("сум")
+        }else{
+            lyCashback.visibility = View.GONE
+        }
 
         if (Prefs.getCurrency() == CurrencyEnum.USD){
             rbUSD.isChecked = true

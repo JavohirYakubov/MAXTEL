@@ -57,9 +57,9 @@ object Client {
         builder.connectTimeout(60, TimeUnit.SECONDS)
         builder.writeTimeout(60, TimeUnit.SECONDS)
         builder.readTimeout(60, TimeUnit.SECONDS)
-        if (BuildConfig.DEBUG) {
-            builder.addInterceptor(ChuckInterceptor(context))
-        }
+//        if (BuildConfig.DEBUG) {
+//            builder.addInterceptor(ChuckInterceptor(context))
+//        }
         builder.addInterceptor(AppInterceptor())
         builder = enableTls12OnPreLollipop(builder)
 

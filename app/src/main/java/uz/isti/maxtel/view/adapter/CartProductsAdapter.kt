@@ -23,6 +23,8 @@ class CartProductsAdapter(val list: List<ProductModel>, val handler: CartProduct
         holder.itemView.tvPrice.text =  ((item?.price) * item.cartCount).formattedAmount()
 
         holder.itemView.tvProductCount.text = item.cartCount.toString()
+        holder.itemView.tvDiscountPercent.text = item.discount_percent.toString() + "%"
+        holder.itemView.tvDiscountPercent.visibility = if (item.discount_percent > 0) View.VISIBLE else View.GONE
 
         holder.itemView.imgMinus.setOnClickListener {
             if (item.cartCount > 0){

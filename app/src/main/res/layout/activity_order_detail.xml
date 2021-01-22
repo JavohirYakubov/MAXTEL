@@ -143,6 +143,13 @@
                                 android:textSize="12sp"
                                 android:layout_marginTop="8dp"
                                 android:textColor="#B0B0B0"
+                                android:text="Кешбек:"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="#B0B0B0"
                                 android:text="@string/date_"/>
                         </LinearLayout>
                         <LinearLayout
@@ -175,6 +182,14 @@
                                 android:text="UZS"/>
                             <TextView
                                 android:id="@+id/tvCurrency"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:layout_marginTop="8dp"
+                                android:textColor="@color/black"
+                                android:text="UZS"/>
+                            <TextView
+                                android:id="@+id/tvCashback"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="12sp"

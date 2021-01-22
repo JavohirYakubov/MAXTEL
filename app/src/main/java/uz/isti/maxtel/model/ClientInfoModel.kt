@@ -13,5 +13,6 @@ data class ClientInfoModel(
     val minimalDostavkaKm: Double,
     val kmSumma: Double,
     val marketName: String?,
-    val currency: Double
+    val currency: Double,
+    val cashback: Double = 0.0
 ): Serializable

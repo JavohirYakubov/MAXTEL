@@ -6,6 +6,6 @@ import uz.isti.maxtel.model.ISTIBaseResponse
 import java.util.*
 
 interface ISTIService {
-    @GET("load_config/MaxtelTest")
+    @GET("load_config/MaxtelMobile")
     fun getConfig(): Observable<ISTIBaseResponse<ISTICheckModel>>
 }

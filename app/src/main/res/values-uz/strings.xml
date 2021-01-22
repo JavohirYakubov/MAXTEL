@@ -54,7 +54,7 @@
     <string name="your_data">Шахсий маълумотлар</string>
     <string name="edit">Ўзгартириш</string>
     <string name="select_branch">Филиални танланг:</string>
-    <string name="code">Код</string>
+    <string name="code">СМС Код</string>
     <string name="success">Муваффақиятли!</string>
     <string name="your_order_accept">Сизнинг буюртмангиз муваффақиятли юборилди. Буюртманинг ҳолатини буюртмалар ойнасидан кузатиб боришингиз мумкун.</string>
     <string name="exit_main_page">Асосий ойнага қайтиш</string>
@@ -141,4 +141,6 @@
     <string name="order_number">Буюртма рақами</string>
     <string name="end_date_">Тугаш вақти</string>
     <string name="please_use_all_features_registr">Илтимос барча имкониятлардан фойдаланиш учун рўйҳатдан ўтинг.</string>
+    <string name="pay_from_cachback">Кешбекдан тўлаш</string>
+    <string name="amount_pay_from_cachback">Кешбекдан тўланадиган сумма</string>
 </resources>

@@ -1,7 +1,6 @@
 package uz.isti.maxtel.screen.main.orders.detail
 
 import android.graphics.BitmapFactory
-import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,16 +22,13 @@ import kotlinx.android.synthetic.main.activity_order_detail.tvPaymentType
 import kotlinx.android.synthetic.main.activity_order_detail.tvProductAmount
 import kotlinx.android.synthetic.main.activity_order_detail.tvTitle
 import kotlinx.android.synthetic.main.activity_order_detail.tvTotalAmount
-import rx.functions.Action1
 import uz.isti.maxtel.R
 import uz.isti.maxtel.base.*
 import uz.isti.maxtel.model.OrderModel
 import uz.isti.maxtel.screen.main.MainViewModel
-import uz.isti.maxtel.screen.main.webview.AppWebViewActivity
 import uz.isti.maxtel.utils.Constants
 import uz.isti.maxtel.utils.DateUtils
 import uz.isti.maxtel.view.adapter.OrderProductAdapter
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 
@@ -115,10 +111,13 @@ class OrderDetailActivity : BaseActivity(), OnMapReadyCallback {
 
         if (order.payme){
             tvPaymentType.text = getString(R.string.payme)
+        }else if (order.cashback){
+            tvPaymentType.text = "Кешбек"
         }else{
             tvPaymentType.text = getString(R.string.cashback)
         }
 
+        tvCashback.text = order.cashbackSumma.formattedAmountWithCurrency("сум")
 
         tvTitle.text =  getString(R.string.order_number_) + "${order.number}"
         if (order.dollar){

@@ -169,13 +169,10 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
 
         if (product?.discount_percent!! > 0){
             cardViewDiscount.visibility = View.VISIBLE
-            flProductOldPrice.visibility = View.VISIBLE
 
-            tvDiscountPercent.text = "-" + product?.discount_percent.toString() + "%"
-            tvProductOldPrice.text = product?.old_price?.formattedAmount()
+            tvDiscountPercent.text = product?.discount_percent.toString() + "%"
         }else{
             cardViewDiscount.visibility = View.GONE
-            flProductOldPrice.visibility = View.GONE
         }
 
         imgProduct.loadImage(App.imageBaseUrl + product?.image)
@@ -192,6 +189,9 @@ class ProductDetailFragment(val listener: ProductDetailListener) : BottomSheetDi
         }else{
             imgFavourite.setImageResource(R.drawable.ic_heart)
         }
+
+        tvProductCount.setText(cartCount.toString())
+
         updateCartAmounts()
     }
 
